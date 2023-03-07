@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import { RouterProvider } from 'react-router-dom';
 import './App.css';
+import routers from './Routes/routers';
+import NavbarComponent from './ShredComponents/Navbar/NavbarComponent';
+import Sidebar from './ShredComponents/Sidebar/Sidebar';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <h1>Tanvir Ahmedck</h1>
+      <header>
+        <NavbarComponent />
+        <div className='flex'>
+
+          {/* main app left sidebar */}
+          <div className='w-[14rem] h-screen p-3 border-r-2 border-gray-100'>
+            <Sidebar />
+          </div>
+
+          {/* all routeing show hear */}
+          <div className='px-3'>
+            <RouterProvider router={routers} />
+          </div>
+
+        </div>
       </header>
     </div>
   );
