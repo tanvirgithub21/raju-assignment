@@ -6,7 +6,7 @@ import { IoNotificationsSharp, IoCreate } from "react-icons/io5";
 
 const Sidebar = () => {
   return (
-    <div>
+    <div className="w-[22rem] min-h-screen p-3 sticky top-[73px]">
       <ul>
         <li className="text-lg text-gray-dark font-semibold mb-3 p-2 hover:bg-gray-100 w-full rounded-xl flex items-center cursor-pointer">
           <span className="mr-2">
