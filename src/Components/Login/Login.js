@@ -4,7 +4,7 @@ import google from "../../Images/google.svg"
 const Login = () => {
     const url = "https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
     return (
-        <div className='flex h-screen'>
+        <div className='md:flex h-screen'>
             {/* image  */}
             <div className='flex-1 h-[calc(100vh-70px)] flex justify-center items-center' >
                 <img className='w-auto h-auto' src={url} alt="login img" />
