@@ -37,7 +37,9 @@ const NavbarComponent = () => {
         </div>
         <Navbar.Collapse>
           <Navbar.Link className="text-base cursor-pointer">Home</Navbar.Link>
-          <Navbar.Link className="text-base cursor-pointer">About</Navbar.Link>
+          <Navbar.Link className="text-base cursor-pointer">
+            My Post
+          </Navbar.Link>
           <Navbar.Link className="text-base cursor-pointer">
             Services
           </Navbar.Link>

@@ -2,7 +2,6 @@ import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import routers from './Routes/routers';
 import NavbarComponent from './ShredComponents/Navbar/NavbarComponent';
-import Sidebar from './ShredComponents/Sidebar/Sidebar';
 
 function App() {
   return (
