@@ -9,7 +9,6 @@ const CreatePost = () => {
   const [showImageAdd, setShowImageAdd] = useState(false);
   const [image, setImage] = useState(false);
 
-  console.log(image);
   // modal toggle handler function
   const [modalToggle, setModalToggle] = useState(false);
   const modalToggleHandle = () => setModalToggle(!modalToggle);
@@ -17,7 +16,7 @@ const CreatePost = () => {
   return (
     <React.Fragment>
       {/* create post  */}
-      <div className="flex px-4 py-6 my-5 border-2 border-gray-200 rounded-xl">
+      <div className="flex px-4 py-6 my-5 border-2 bg-white border-gray-200 rounded-xl">
         <Avatar
           className="mr-3"
           img="https://qph.cf2.quoracdn.net/main-qimg-eb86c6a549e2e52fc89752a002660e97-pjlq"

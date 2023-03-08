@@ -3,7 +3,7 @@ import React from "react";
 
 const NavbarComponent = () => {
   return (
-    <nav className="border-b-2 border-gray-100">
+    <nav className="border-b-2 border-gray-100 sticky top-0 z-50">
       <Navbar fluid={true} rounded={true}>
         <Navbar.Brand>
           <span className="text-xl font-bold text-blue-600">Your App</span>

@@ -1,16 +1,21 @@
 import React from "react";
 import CreatePost from "./CreatePost";
+import SinglePost from "./SinglePost";
 
 const Home = () => {
   return (
-    <div className="min-w-[28rem] max-w-[45rem]">
+    <div className="w-full max-w-[40rem]">
       <CreatePost />
-      <h1 className="w-full">
-        Home Component Home Component Home Component Home Component Home
-        Component Home Component Home Component Home Component Home Component
-        Home Component Home Component Home Component Home Component Home
-        Component Home Component Home Component{" "}
-      </h1>
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
+      <SinglePost />
     </div>
   );
 };
