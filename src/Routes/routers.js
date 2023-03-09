@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
+import AdminDashboard from "../AdminDashboard/AdminDashboard"
+import Dashboard from "../AdminDashboard/Dashboard/Dashboard"
 import Home from "../Components/Home/Home"
 import Login from "../Components/Login/Login"
 import MyPost from "../Components/MyPost/MyPost"
@@ -22,6 +24,21 @@ const routers = createBrowserRouter([
         path: "/sing-up",
         element: <SingUp />
     },
+    {
+        path: "/admin",
+        element: <AdminDashboard />,
+        children: [
+            {
+                path: "",
+                element: <Dashboard />,
+            },
+            {
+                path: "dashboard",
+                element: <Dashboard />,
+            },
+        ],
+    },
+
     {
         path: "/*",
         element: <NotFound />
