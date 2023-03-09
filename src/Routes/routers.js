@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 import AdminDashboard from "../AdminDashboard/AdminDashboard"
-import Dashboard from "../AdminDashboard/Dashboard/Dashboard"
+import AllPostAndMyPost from "../AdminDashboard/AllPost/AllPostAndMyPost"
+import MakeAdminAndUser from "../AdminDashboard/MakeAdminAndUser/MakeAdminAndUser"
 import Home from "../Components/Home/Home"
 import Login from "../Components/Login/Login"
 import MyPost from "../Components/MyPost/MyPost"
@@ -30,12 +31,25 @@ const routers = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <Dashboard />,
+                element: <AllPostAndMyPost pageName="all-post" />,
             },
             {
-                path: "dashboard",
-                element: <Dashboard />,
+                path: "all-post",
+                element: <AllPostAndMyPost pageName="all-post" />,
             },
+            {
+                path: "my-post",
+                element: <AllPostAndMyPost pageName="my-post" />,
+            },
+            {
+                path: "make-admin",
+                element: <MakeAdminAndUser pageName="make-admin" />,
+            },
+            {
+                path: "user-management",
+                element: <MakeAdminAndUser pageName="user-management" />,
+            },
+
         ],
     },
 

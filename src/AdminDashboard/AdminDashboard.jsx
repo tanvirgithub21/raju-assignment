@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import { MdDashboardCustomize } from "react-icons/md";
 import { BsPostcardFill, BsPostcardHeart } from "react-icons/bs";
 import { FaUserFriends } from "react-icons/fa";
 import { Avatar, Card } from "flowbite-react";
@@ -9,13 +8,13 @@ const AdminDashboard = () => {
   return (
     <div className="flex">
       {/* sideBar */}
-      <div className="min-w-[15rem] bg-gray-50 p-2 h-[calc(100vh-70px)]">
+      <div className="min-w-[15rem] bg-gray-50 p-2 h-[calc(100vh-70px)] sticky top-[61px]">
         <ul>
           <li className="my-3">
-            <Link class="flex items-center p-2 text-base font-normal text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
-              <MdDashboardCustomize size="1.5rem" />
+            <Link class="flex items-center p-2 text-base font-normal  text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+              <BsPostcardHeart size="1.5rem" />
               <span class="flex-1 ml-3 whitespace-nowrap font-semibold">
-                Dashboard
+                All Post
               </span>
             </Link>
           </li>
@@ -27,11 +26,12 @@ const AdminDashboard = () => {
               </span>
             </Link>
           </li>
+
           <li className="my-3">
             <Link class="flex items-center p-2 text-base font-normal  text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
-              <BsPostcardHeart size="1.5rem" />
+              <FaUserFriends size="1.5rem" />
               <span class="flex-1 ml-3 whitespace-nowrap font-semibold">
-                All Post
+                Make Admin
               </span>
             </Link>
           </li>
@@ -51,7 +51,8 @@ const AdminDashboard = () => {
         <Outlet />
       </div>
 
-      <div className="min-w-[22rem] bg-white border-l-4 border-gray-100 p-2 h-[calc(100vh-70px)]">
+      {/* admin right sideBar  */}
+      <div className="min-w-[22rem] bg-white border-l-4 border-gray-100 p-2 h-[calc(100vh-70px)] sticky top-[61px]">
         {/* admin profile  */}
         <div className="max-w-sm">
           <Card className="bg-[hsla(206,100%,71%,0)]">
