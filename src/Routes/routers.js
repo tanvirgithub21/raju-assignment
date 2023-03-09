@@ -34,10 +34,6 @@ const routers = createBrowserRouter([
                 element: <AllPostAndMyPost pageName="all-post" />,
             },
             {
-                path: "all-post",
-                element: <AllPostAndMyPost pageName="all-post" />,
-            },
-            {
                 path: "my-post",
                 element: <AllPostAndMyPost pageName="my-post" />,
             },

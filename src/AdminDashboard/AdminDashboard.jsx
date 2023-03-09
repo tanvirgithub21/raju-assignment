@@ -1,47 +1,78 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { BsPostcardFill, BsPostcardHeart } from "react-icons/bs";
 import { FaUserFriends } from "react-icons/fa";
 import { Avatar, Card } from "flowbite-react";
+import { HiHome } from "react-icons/hi";
 
 const AdminDashboard = () => {
+  // navbar css style variable
+  const deActive =
+    "flex items-center p-2 text-base font-normal  text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700";
+  const active =
+    "flex items-center p-2 text-base font-normal text-[#1C64F2]  rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700";
+
   return (
     <div className="flex">
       {/* sideBar */}
-      <div className="min-w-[15rem] bg-gray-50 p-2 h-[calc(100vh-70px)] sticky top-[61px]">
+      <div className="min-w-[15rem] bg-gray-50 p-2 h-[calc(100vh-70px)] sticky top-[73px]">
         <ul>
           <li className="my-3">
-            <Link class="flex items-center p-2 text-base font-normal  text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
-              <BsPostcardHeart size="1.5rem" />
-              <span class="flex-1 ml-3 whitespace-nowrap font-semibold">
-                All Post
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? active : deActive)}
+            >
+              <HiHome size="1.5rem" />
+              <span className="flex-1 ml-3 whitespace-nowrap font-semibold">
+                Home
               </span>
-            </Link>
+            </NavLink>
           </li>
           <li className="my-3">
-            <Link class="flex items-center p-2 text-base font-normal  text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+            <NavLink
+              to="/admin"
+              end
+              className={({ isActive }) => (isActive ? active : deActive)}
+            >
+              <BsPostcardHeart size="1.5rem" />
+              <span className="flex-1 ml-3 whitespace-nowrap font-semibold">
+                All Post
+              </span>
+            </NavLink>
+          </li>
+          <li className="my-3">
+            <NavLink
+              to="/admin/my-post"
+              className={({ isActive }) => (isActive ? active : deActive)}
+            >
               <BsPostcardFill size="1.5rem" />
-              <span class="flex-1 ml-3 whitespace-nowrap font-semibold">
+              <span className="flex-1 ml-3 whitespace-nowrap font-semibold">
                 My Post
               </span>
-            </Link>
+            </NavLink>
           </li>
 
           <li className="my-3">
-            <Link class="flex items-center p-2 text-base font-normal  text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+            <NavLink
+              to="/admin/make-admin"
+              className={({ isActive }) => (isActive ? active : deActive)}
+            >
               <FaUserFriends size="1.5rem" />
-              <span class="flex-1 ml-3 whitespace-nowrap font-semibold">
+              <span className="flex-1 ml-3 whitespace-nowrap font-semibold">
                 Make Admin
               </span>
-            </Link>
+            </NavLink>
           </li>
           <li className="my-3">
-            <Link class="flex items-center p-2 text-base font-normal  text-gray-6B7280 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+            <NavLink
+              to="/admin/user-management"
+              className={({ isActive }) => (isActive ? active : deActive)}
+            >
               <FaUserFriends size="1.5rem" />
-              <span class="flex-1 ml-3 whitespace-nowrap font-semibold">
+              <span className="flex-1 ml-3 whitespace-nowrap font-semibold">
                 User Management
               </span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </div>
@@ -52,7 +83,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* admin right sideBar  */}
-      <div className="min-w-[22rem] bg-white border-l-4 border-gray-100 p-2 h-[calc(100vh-70px)] sticky top-[61px]">
+      <div className="min-w-[22rem] bg-white border-l-4 border-gray-100 p-2 h-[calc(100vh-70px)] sticky top-[73px]">
         {/* admin profile  */}
         <div className="max-w-sm">
           <Card className="bg-[hsla(206,100%,71%,0)]">

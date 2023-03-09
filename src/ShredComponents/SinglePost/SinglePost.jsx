@@ -8,13 +8,13 @@ const SinglePost = () => {
   const { pathname } = useLocation();
 
   return (
-    <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-9">
-      <div class="p-5">
+    <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-9">
+      <div className="p-5">
         {/* card header  */}
         <div className="flex justify-between mb-3">
           <div className="flex gap-3">
             <img
-              class="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+              className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
               src="https://qph.cf2.quoracdn.net/main-qimg-eb86c6a549e2e52fc89752a002660e97-pjlq"
               alt="Bordered avatar"
             />
@@ -49,7 +49,7 @@ const SinglePost = () => {
       {/* cart image  */}
       <div className="">
         <img
-          class="object-cover object-top w-full h-auto max-h-[32rem] "
+          className="object-cover object-top w-full h-auto max-h-[32rem] "
           src="https://qph.cf2.quoracdn.net/main-qimg-eb86c6a549e2e52fc89752a002660e97-pjlq"
           alt=""
         />
