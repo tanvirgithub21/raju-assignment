@@ -12,7 +12,7 @@ const Sidebar = () => {
     "text-lg text-[#1C64F2] font-semibold mb-3 p-2 hover:bg-gray-100 w-full rounded-xl flex items-center cursor-pointer";
 
   return (
-    <div className="w-[22rem] min-h-screen p-3 sticky top-[73px]">
+    <div className="w-[22rem] min-h-[calc(100vh-95px)] p-3 sticky top-[85px]  border-r-2 border-gray-100">
       <ul>
         <li>
           <NavLink

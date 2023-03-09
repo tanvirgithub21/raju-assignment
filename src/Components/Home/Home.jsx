@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className="flex relative">
       {/* main app left sidebar */}
-      <div className=" min-h-screen p-3 sticky top-[73px]">
+      <div className=" h-full p-3 sticky top-[73px]">
         <Sidebar />
       </div>
       {/* Home component  */}
