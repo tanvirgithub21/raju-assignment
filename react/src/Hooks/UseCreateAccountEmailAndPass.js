@@ -8,11 +8,9 @@ const UseCreateAccountEmailAndPass = (email, pass, postData) => {
     createUserWithEmailAndPassword(auth, email, pass)
         .then((userCredential) => {
             // Signed in 
-            const user = userCredential.user;
-
-            console.log(user);
+            const userUid = userCredential.user.uid;
             // saved account information database
-            UseCreateAccount(postData);
+            UseCreateAccount(postData, userUid);
         })
         .catch((error) => {
             const errorMessage = error.message;
