@@ -8,17 +8,34 @@ const User = new mongoose.model("user", loginRecordSchema)
 
 // user router
 // Get all users
-route.get("/", (req, res) => {
-    // all user get in mongodb server with mongoose
+// sent data to params:- http://localhost:5000/users
+route.get("/", async (req, res) => {
+    console.log("enter root route");
+    const allUser = await User.find()
+    try {
+        if (allUser) {
+            res.status(200).json({
+                message: "Find all users successfully",
+                result: allUser
+            })
+        } else {
+            res.status(500).json({ error: "this is server side error" })
+        }
+    } catch {
+        res.status(500).json({ error: "this is server side error" })
+
+    }
+
+
 })
 
 // Get a single user
+// sent data to params:- http://localhost:5000/user/id type hear...
 route.get("/:id", async (req, res) => {
     const { id } = req.params
     try {
         const findUser = await User.findById(id)
         if (findUser) {
-            console.log(findUser);
             res.status(200).json({
                 message: "Find user successfully",
                 result: findUser
@@ -96,8 +113,7 @@ route.delete("/delete/:id", async (req, res) => {
         } else {
             res.status(500).json({ error: "this is server side error" })
         }
-    } catch (err) {
-        console.log(err);
+    } catch {
         res.status(500).json({ error: "this is server side error" })
     }
 
