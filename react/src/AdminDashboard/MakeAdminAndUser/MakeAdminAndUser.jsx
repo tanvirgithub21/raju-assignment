@@ -3,7 +3,6 @@ import React from "react";
 import Chart from "../../ShredComponents/Chart/Chart";
 
 const MakeAdminAndUser = ({ pageName }) => {
-  console.log(pageName);
   const tdata = [
     "kldfjl",
     "kldfjl",

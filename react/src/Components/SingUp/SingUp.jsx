@@ -7,15 +7,27 @@ import { useForm } from "react-hook-form";
 
 const SingUp = () => {
   const { register, handleSubmit, reset } = useForm();
-  const handleCreateEmailPass = (data) => {
+
+  // handle create account
+  const handleCreateEmailPass = async (data) => {
     const full_name = data.full_name;
     const email = data.email;
+    const username = data.username;
     const password = data.password;
     const confirm_password = data.confirm_password;
+
+    // make server post data
+    const postData = {
+      name: full_name,
+      email: email,
+      username: username.toLowerCase(),
+      loginRecords: [{ provider: "email" }],
+    };
+
     if (email && full_name && password && confirm_password) {
       if (password === confirm_password) {
-        console.log("ok");
-        UseCreateAccountEmailAndPass(email, password);
+        console.log(postData);
+        UseCreateAccountEmailAndPass(email, password, postData);
         reset();
       }
     }
@@ -59,6 +71,19 @@ const SingUp = () => {
                 type="email"
                 name="email"
                 id="email"
+                className="border-none"
+              />
+            </div>
+
+            <div className="flex flex-col mb-2">
+              <label htmlFor="username" className="text-gray-600 text-base ">
+                Username
+              </label>
+              <input
+                {...register("username", { required: true })}
+                type="text"
+                name="username"
+                id="username"
                 className="border-none"
               />
             </div>

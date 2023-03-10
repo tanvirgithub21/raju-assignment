@@ -37,7 +37,6 @@ const tdata = [
 ];
 
 const AllPostAndMyPost = ({ pageName }) => {
-  console.log(pageName);
   return (
     <div>
       {/* chart  */}

@@ -10,7 +10,6 @@ const UseGoogleSingInHook = () => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
             const user = result.user;
-            console.log("token", token, "user", user);
         }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
