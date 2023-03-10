@@ -2,7 +2,7 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import React from "react";
 
 const NavbarComponent = () => (
-  <nav className="border-b-2 border-gray-100 sticky top-0 z-50">
+  <nav className="border-b-2 border-gray-100 sticky top-0 z-40">
     <Navbar fluid={true} rounded={true}>
       <Navbar.Brand>
         <span

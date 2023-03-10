@@ -1,8 +1,26 @@
+/* eslint-disable no-const-assign */
 import React from "react";
+import UseCreateAccountEmailAndPass from "../../Hooks/UseCreateAccountEmailAndPass";
 import google from "../../Images/google.svg";
 import sing_up from "../../Images/sing_up.png";
+import { useForm } from "react-hook-form";
 
 const SingUp = () => {
+  const { register, handleSubmit, reset } = useForm();
+  const handleCreateEmailPass = (data) => {
+    const full_name = data.full_name;
+    const email = data.email;
+    const password = data.password;
+    const confirm_password = data.confirm_password;
+    if (email && full_name && password && confirm_password) {
+      if (password === confirm_password) {
+        console.log("ok");
+        UseCreateAccountEmailAndPass(email, password);
+        reset();
+      }
+    }
+  };
+
   return (
     <div className="md:flex h-screen">
       {/* image  */}
@@ -19,34 +37,38 @@ const SingUp = () => {
             </h2>
           </div>
 
-          <form action="">
+          <form onSubmit={handleSubmit(handleCreateEmailPass)}>
+            <div className="flex flex-col mb-2">
+              <label htmlFor="full_name" className="text-gray-600 text-base ">
+                Full Name
+              </label>
+              <input
+                {...register("full_name", { required: true })}
+                type="text"
+                name="full_name"
+                id="full_name"
+                className="border-none"
+              />
+            </div>
             <div className="flex flex-col mb-2">
               <label htmlFor="email" className="text-gray-600 text-base ">
                 Email Address
               </label>
               <input
+                {...register("email", { required: true })}
                 type="email"
                 name="email"
                 id="email"
                 className="border-none"
               />
             </div>
-            <div className="flex flex-col mb-2">
-              <label htmlFor="user_name" className="text-gray-600 text-base ">
-                User Name
-              </label>
-              <input
-                type="text"
-                name="user_name"
-                id="user_name"
-                className="border-none"
-              />
-            </div>
+
             <div className="flex flex-col mb-6">
               <label htmlFor="password" className="text-gray-600 text-base ">
                 Password
               </label>
               <input
+                {...register("password", { required: true })}
                 type="password"
                 name="password"
                 id="password"
@@ -55,15 +77,16 @@ const SingUp = () => {
             </div>
             <div className="flex flex-col mb-6">
               <label
-                htmlFor="Confirm_password"
+                htmlFor="confirm_password"
                 className="text-gray-600 text-base "
               >
                 Confirm Password
               </label>
               <input
+                {...register("confirm_password", { required: true })}
                 type="password"
-                name="Confirm_password"
-                id="Confirm_password"
+                name="confirm_password"
+                id="confirm_password"
                 className="border-none"
               />
             </div>

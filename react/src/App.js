@@ -2,6 +2,8 @@ import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import routers from './Routes/routers';
 import NavbarComponent from './ShredComponents/Navbar/NavbarComponent';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
 
         {/* </div> */}
       </header>
+      <ToastContainer />
     </div>
   );
 }
