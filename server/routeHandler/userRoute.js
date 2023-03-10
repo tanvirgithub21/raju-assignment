@@ -11,12 +11,12 @@ const User = new mongoose.model("user", loginRecordSchema)
 // sent data to params:- http://localhost:5000/users
 route.get("/", async (req, res) => {
     console.log("enter root route");
-    const allUser = await User.find()
+    const allUsers = await User.find()
     try {
-        if (allUser) {
+        if (allUsers) {
             res.status(200).json({
                 message: "Find all users successfully",
-                result: allUser
+                result: allUsers
             })
         } else {
             res.status(500).json({ error: "this is server side error" })
@@ -46,6 +46,28 @@ route.get("/:id", async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "this is server side error" })
+    }
+
+})
+
+// Get all users username
+// sent data to params:- http://localhost:5000/user/all/username
+route.get("/all/username", async (req, res) => {
+    console.log("enter user name route");
+    const allUsers = await User.find()
+    try {
+        if (allUsers) {
+            const allUserName = allUsers.map(user => user.username)
+            res.status(200).json({
+                message: "Find all Username successfully",
+                result: allUserName
+            })
+        } else {
+            res.status(500).json({ error: "this is server side error" })
+        }
+    } catch {
+        res.status(500).json({ error: "this is server side error" })
+
     }
 
 })
