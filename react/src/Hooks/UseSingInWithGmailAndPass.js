@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 import auth from "../fierbaseConfig";
-
-
+import UseLoginUser from "./ServerRequest/UseLoginUser";
 
 
 const UseSingInWithGmailAndPass = (email, password) => {
@@ -10,15 +10,11 @@ const UseSingInWithGmailAndPass = (email, password) => {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            // ...
-            console.log(user);
+            if (user) {
+                UseLoginUser({ email, provider: "email " }, user.uid)
+            }
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorMessage);
-
-        });
+        .catch((error) => error && toast.error("Login field"));
 };
 
 export default UseSingInWithGmailAndPass;

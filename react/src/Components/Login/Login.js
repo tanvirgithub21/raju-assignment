@@ -9,12 +9,12 @@ const Login = () => {
     const url = "https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
 
 
-
     const { register, handleSubmit, reset } = useForm();
     const handleLogIn = data => {
         if (data.email && data.password) {
 
             UseSingInWithGmailAndPass(data.email, data.password)
+            reset()
         } else {
             toast.error("fill all input field")
         }

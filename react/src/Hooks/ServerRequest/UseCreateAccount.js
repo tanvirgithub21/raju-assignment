@@ -33,7 +33,7 @@ const UseCreateAccount = (data, userUid) => {
 
 
             } else {
-                getAuth().deleteUser(userUid)
+                // getAuth().deleteUser(userUid)
                 toast.error("username already exist")
             }
         }).catch(err => {
