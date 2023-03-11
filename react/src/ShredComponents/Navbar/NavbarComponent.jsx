@@ -1,9 +1,10 @@
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import UseSingOut from "../../Hooks/UseSignOut";
 
 const NavbarComponent = ({ children }) => {
-  const user = false;
+  const [user] = useState(true);
 
   return (
     <>
@@ -46,7 +47,10 @@ const NavbarComponent = ({ children }) => {
                 </Dropdown>
                 <Navbar.Toggle />
                 <div className="ml-8">
-                  <Button className="bg-[#D40600] hover:bg-[#b1120d]">
+                  <Button
+                    onClick={UseSingOut}
+                    className="bg-[#D40600] hover:bg-[#b1120d]"
+                  >
                     LOGOUT
                   </Button>
                 </div>
