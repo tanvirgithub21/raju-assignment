@@ -1,10 +1,27 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import auth from "../../fierbaseConfig";
 import UseSingOut from "../../Hooks/UseSignOut";
 
 const NavbarComponent = ({ children }) => {
-  const [user] = useState(true);
+  const [user, setUser] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+        setUser(user);
+        navigate("/");
+      } else {
+        // signOut(auth);
+        setUser(false);
+        console.log("logout on state change");
+      }
+    });
+  }, [navigate]);
 
   return (
     <>

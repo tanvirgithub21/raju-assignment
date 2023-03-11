@@ -3,13 +3,16 @@ import './App.css';
 import routers from './Routes/routers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CentralStoreProvider from './Context/CentralStoreProvider/CentralStoreProvider';
 
 function App() {
   return (
-    <div className="App">
+    <CentralStoreProvider>
       <RouterProvider router={routers} />
       <ToastContainer />
-    </div>
+    </CentralStoreProvider>
+
+
   );
 }
 

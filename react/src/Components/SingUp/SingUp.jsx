@@ -1,33 +1,31 @@
 /* eslint-disable no-const-assign */
-import React from "react";
-import UseCreateAccountEmailAndPass from "../../Hooks/UseCreateAccountEmailAndPass";
+import React, { useContext } from "react";
 import google from "../../Images/google.svg";
 import sing_up from "../../Images/sing_up.png";
 import { useForm } from "react-hook-form";
+import { CentralStore } from "../../Context/CentralStoreProvider/CentralStoreProvider";
 
 const SingUp = () => {
   const { register, handleSubmit, reset } = useForm();
+  const { firebaseAuth } = useContext(CentralStore);
+  const { CreateAccountEmailAndPass } = firebaseAuth;
 
-  // handle create account
+  // handle create new account
   const handleCreateEmailPass = async (data) => {
-    const full_name = data.full_name;
-    const email = data.email;
-    const username = data.username;
-    const password = data.password;
-    const confirm_password = data.confirm_password;
+    const { name, email, username, password, confirm_password } = data;
 
-    // make server post data
+    // make server post data formate
     const postData = {
-      name: full_name,
-      email: email,
+      name,
+      email,
       username: username.toLowerCase(),
       loginRecords: [{ provider: "email" }],
     };
 
-    if (email && full_name && password && confirm_password) {
+    if (email && name && password && confirm_password) {
       if (password === confirm_password) {
         console.log(postData);
-        UseCreateAccountEmailAndPass(email, password, postData);
+        CreateAccountEmailAndPass(email, password, postData);
         reset();
       }
     }
@@ -51,14 +49,14 @@ const SingUp = () => {
 
           <form onSubmit={handleSubmit(handleCreateEmailPass)}>
             <div className="flex flex-col mb-2">
-              <label htmlFor="full_name" className="text-gray-600 text-base ">
+              <label htmlFor="name" className="text-gray-600 text-base ">
                 Full Name
               </label>
               <input
-                {...register("full_name", { required: true })}
+                {...register("name", { required: true })}
                 type="text"
-                name="full_name"
-                id="full_name"
+                name="name"
+                id="name"
                 className="border-none"
               />
             </div>
