@@ -1,6 +1,8 @@
 import axios from "axios";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
+import auth from "../../fierbaseConfig";
+import UseSingOut from "../../Hooks/UseSignOut";
 
 
 
@@ -70,6 +72,50 @@ const Auth = () => {
             });
     }
 
+    // saved login information database
+    const loginAccountDataSaveDatabase = (data) => {
+
+        // login data save
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
+            data: data
+        };
+        axios(`${process.env.REACT_APP_SERVER_URL}user/login`, options)
+            .then(response => {
+                response && toast.success("Login successfully")
+            })
+            .catch(err => {
+                // getAuth().deleteUser(userUid)
+                console.log(err);
+                UseSingOut()
+                err && toast.error("Login field")
+            })
+    };
+
+    // login account function handle firebase
+    firebaseAuth.LoginWithGmailAndPass = (email, password) => {
+
+        // login firebase email and password
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                if (user) {
+                    console.log("enter save data", user, user.email);
+                    //Save login data in database
+                    loginAccountDataSaveDatabase({ email: user.email, provider: "email " })
+                }
+            })
+            .catch((error) => {
+                //Signed id error
+                const errorMessage = error.message;
+                toast.error(errorMessage.slice(22, -2))
+            });
+    };
 
     return firebaseAuth
 }

@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import UseGoogleSingInHook from '../../Hooks/UseGoogleSingInHook';
 import google from "../../Images/google.svg"
 import { useForm } from "react-hook-form";
-import UseSingInWithGmailAndPass from '../../Hooks/UseSingInWithGmailAndPass';
 import { toast } from 'react-toastify';
+import { CentralStore } from '../../Context/CentralStoreProvider/CentralStoreProvider';
 
 const Login = () => {
-    const url = "https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-
-
     const { register, handleSubmit, reset } = useForm();
-    const handleLogIn = data => {
-        if (data.email && data.password) {
+    const loginImageUrl = "https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
 
-            UseSingInWithGmailAndPass(data.email, data.password)
+    // use context 
+    const { firebaseAuth } = useContext(CentralStore)
+    console.log(firebaseAuth);
+    const { LoginWithGmailAndPass } = firebaseAuth
+
+    //handle login function
+    const handleLogIn = data => {
+        const { email, password } = data
+        if (email && password) {
+            //login function hear
+            LoginWithGmailAndPass(email, password)
             reset()
         } else {
             toast.error("fill all input field")
@@ -25,7 +31,7 @@ const Login = () => {
         <div className='md:flex h-screen'>
             {/* image  */}
             <div className='flex-1 h-[calc(100vh-70px)] flex justify-center items-center' >
-                <img className='w-auto h-auto' src={url} alt="login img" />
+                <img className='w-auto h-auto' src={loginImageUrl} alt="login img" />
             </div>
 
             {/* login form  */}
