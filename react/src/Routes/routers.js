@@ -6,28 +6,49 @@ import Home from "../Components/Home/Home"
 import Login from "../Components/Login/Login"
 import MyPost from "../Components/MyPost/MyPost"
 import SingUp from "../Components/SingUp/SingUp"
+import NavbarComponent from "../ShredComponents/Navbar/NavbarComponent"
 import NotFound from "../ShredComponents/NotFound/NotFound"
 
 const routers = createBrowserRouter([
     {
         path: "/",
-        element: <Home />
+        element: (
+            <NavbarComponent>
+                <Home />
+            </NavbarComponent>
+        )
     },
     {
         path: "/my-post",
-        element: <MyPost />
+        element: (
+            <NavbarComponent>
+                <MyPost />
+            </NavbarComponent>
+        )
     },
     {
         path: "/login",
-        element: <Login />
+        element: (
+            <NavbarComponent>
+                <Login />
+            </NavbarComponent>
+        )
     },
     {
         path: "/sing-up",
-        element: <SingUp />
+        element: (
+            <NavbarComponent>
+                <SingUp />
+            </NavbarComponent>
+        )
     },
     {
         path: "/admin",
-        element: <AdminDashboard />,
+        element: (
+            <NavbarComponent>
+                <AdminDashboard />
+            </NavbarComponent>
+        ),
         children: [
             {
                 path: "",
@@ -51,7 +72,11 @@ const routers = createBrowserRouter([
 
     {
         path: "/*",
-        element: <NotFound />
+        element: (
+            <NavbarComponent>
+                <NotFound />
+            </NavbarComponent>
+        )
     },
 ])
 

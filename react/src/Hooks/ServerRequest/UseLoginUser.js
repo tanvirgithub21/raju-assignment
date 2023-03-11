@@ -1,12 +1,11 @@
 import axios from "axios"
-import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 
-const UseLoginUser = (data, userUid) => {
+const UseLoginUser = (data) => {
 
     // login data save
     const options = {
-        url: 'http://localhost:3000/api/home',
+        url: `${process.env.REACT_APP_SERVER_URL}user/login`,
         method: 'POST',
         headers: {
             'Accept': 'application/json',

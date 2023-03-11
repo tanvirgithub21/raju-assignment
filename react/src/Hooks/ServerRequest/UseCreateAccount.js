@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { getAuth } from 'firebase/auth';
 import { toast } from "react-toastify";
 
-const UseCreateAccount = (data, userUid) => {
+const UseCreateAccount = (data) => {
     console.log("server post", data);
     // get all username 
     axios(`${process.env.REACT_APP_SERVER_URL}user/all/username`)
@@ -27,6 +26,8 @@ const UseCreateAccount = (data, userUid) => {
                     data: data
                 })
                     .then(res => {
+                        const { email } = res.data.result;
+                        localStorage.setItem('login_user', email)
                         toast.success("Create account Successfully")
                     })
                     .catch(err => toast.error("Create account field"))
