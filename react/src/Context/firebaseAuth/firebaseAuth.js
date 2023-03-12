@@ -11,11 +11,6 @@ const Auth = () => {
 
     const firebaseAuth = {}
 
-    //pass User login info
-
-
-
-
     //create account data post database 
     const createNewAccountDataPostDatabase = async (data) => {
         await axios({
@@ -35,8 +30,8 @@ const Auth = () => {
             .catch(err => toast.error("Create account field"))
     }
 
-    // saved create new account information database
-    const createAccountDataSaveDatabase = (data, userUid = null) => {
+    // check valid username and create new account
+    const checkValidUsernameAndCreateAccount = (data, userUid = null) => {
         // get all username 
         axios(`${process.env.REACT_APP_SERVER_URL}user/all/username`)
             .then(async res => {
@@ -66,7 +61,7 @@ const Auth = () => {
                 // Signed in 
                 const userUid = userCredential.user.uid;
                 // saved account information database
-                createAccountDataSaveDatabase(postData, userUid);
+                checkValidUsernameAndCreateAccount(postData, userUid);
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -77,6 +72,7 @@ const Auth = () => {
 
     // saved login information database
     const loginAccountDataSaveDatabase = (data) => {
+
 
         // login data save
         const options = {
@@ -204,10 +200,7 @@ const Auth = () => {
         }
     }
 
-
     return firebaseAuth
 }
-
-
 
 export default Auth();

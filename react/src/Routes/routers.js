@@ -25,7 +25,9 @@ const routers = createBrowserRouter([
         path: "/my-post",
         element: (
             <NavbarComponent>
-                <MyPost />
+                <PrivateRoute>
+                    <MyPost />
+                </PrivateRoute>
             </NavbarComponent>
         )
     },
@@ -49,7 +51,9 @@ const routers = createBrowserRouter([
         path: "/admin",
         element: (
             <NavbarComponent>
-                <AdminDashboard />
+                <PrivateRoute>
+                    <AdminDashboard />
+                </PrivateRoute>
             </NavbarComponent>
         ),
         children: [

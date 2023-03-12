@@ -1,12 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import google from "../../Images/google.svg"
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import { CentralStore } from '../../Context/CentralStoreProvider/CentralStoreProvider';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import auth from '../../fierbaseConfig';
 
 const Login = () => {
     const { register, handleSubmit, reset } = useForm();
     const loginImageUrl = "https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+
+    // navigate home targeted route
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigate(from, { replace: true });
+            }
+        });
+    }, [navigate, from]);
 
     // use context 
     const { firebaseAuth } = useContext(CentralStore)
@@ -18,6 +34,7 @@ const Login = () => {
         if (email && password) {
             //login function hear
             LoginWithGmailAndPass(email, password)
+            navigate(from, { replace: true });
             reset()
         } else {
             toast.error("fill all input field")
@@ -70,7 +87,10 @@ const Login = () => {
                     </form>
 
                     <div className='mb-2'>
-                        <button onClick={LoginAndSignInWithGoogle} type="submit" className='bg-[#2563EB] w-full h-14 text-white text-lg font-medium border-2 border-[#2563EB] rounded-md flex items-center'>
+                        <button onClick={async () => {
+                            await LoginAndSignInWithGoogle()
+                        }
+                        } type="submit" className='bg-[#2563EB] w-full h-14 text-white text-lg font-medium border-2 border-[#2563EB] rounded-md flex items-center'>
                             <img className='w-16 h-full rounded-l-md bg-white mr-6' src={google} alt="google icon" />
                             <span className='text-lg'>Sign in with google</span>
                         </button>

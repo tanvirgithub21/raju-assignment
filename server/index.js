@@ -6,6 +6,7 @@ const app = express();
 
 // import External router
 const userRouter = require("./routeHandler/userRoute")
+const postRouter = require("./routeHandler/postRoute")
 
 // server port 
 const port = process.env.PORT || 5000;
@@ -20,8 +21,9 @@ mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MO
     .catch(err => console.log(err))
 
 
-// user route define 
+// route define 
 app.use("/user", userRouter)
+app.use("/post", postRouter)
 
 
 
