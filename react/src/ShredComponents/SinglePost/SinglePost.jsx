@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "react-moment";
 import { AiTwotoneLike } from "react-icons/ai";
 import { TbShare3 } from "react-icons/tb";
 import { GoPlus } from "react-icons/go";
@@ -18,15 +17,21 @@ const SinglePost = ({ post }) => {
         {/* card header  */}
         <div className="flex justify-between mb-3">
           <div className="flex gap-3">
-            <img
-              className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-              src="https://qph.cf2.quoracdn.net/main-qimg-eb86c6a549e2e52fc89752a002660e97-pjlq"
-              alt="Bordered avatar"
-            />
+            {author.imageUrl ? (
+              <img
+                className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                src="https://qph.cf2.quoracdn.net/main-qimg-eb86c6a549e2e52fc89752a002660e97-pjlq"
+                alt="Bordered avatar"
+              />
+            ) : (
+              <div className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 text-4xl font-semibold text-blue-500 flex justify-center items-center">
+                {author.name.slice(0, 1)}
+              </div>
+            )}
 
             <div>
               <h4 className="text-lg w-full font-semibold text-gray-dark">
-                Tanvir Ahmed
+                {author.name}
               </h4>
               <h6 className="text-sm font-md font-medium text-gray-600">
                 <Moment fromNow>{time}</Moment>
@@ -34,7 +39,7 @@ const SinglePost = ({ post }) => {
             </div>
           </div>
           {/* delete post button  */}
-          {pathname === "/" && (
+          {pathname === "/my-post" && (
             <div
               onClick={() => deletePost(_id)}
               className="cursor-pointer w-8 h-8 p-1 text-2xl rotate-45 bg-gray-200 rounded-full"

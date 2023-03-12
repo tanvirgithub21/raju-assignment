@@ -14,8 +14,18 @@ const postSchema = new mongoose.Schema({
         require: true,
     },
     author: {
-        type: String,
-        required: true
+        name: {
+            type: String,
+            required: true
+        },
+        username: {
+            type: String,
+            required: true
+        },
+        imageUrl: {
+            type: String,
+            default: ""
+        }
     },
     time: {
         type: Date,
