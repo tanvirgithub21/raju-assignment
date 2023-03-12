@@ -8,13 +8,16 @@ import MyPost from "../Components/MyPost/MyPost"
 import SingUp from "../Components/SingUp/SingUp"
 import NavbarComponent from "../ShredComponents/Navbar/NavbarComponent"
 import NotFound from "../ShredComponents/NotFound/NotFound"
+import PrivateRoute from "./PrivateRoute/PrivateRoute"
 
 const routers = createBrowserRouter([
     {
         path: "/",
         element: (
             <NavbarComponent>
-                <Home />
+                <PrivateRoute>
+                    <Home />
+                </PrivateRoute>
             </NavbarComponent>
         )
     },

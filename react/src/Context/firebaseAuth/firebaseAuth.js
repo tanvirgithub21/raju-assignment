@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
 import auth from "../../fierbaseConfig";
 import UseSingOut from "../../Hooks/UseSignOut";
@@ -8,7 +8,13 @@ import UseSingOut from "../../Hooks/UseSignOut";
 
 const Auth = () => {
 
+
     const firebaseAuth = {}
+
+    //pass User login info
+
+
+
 
     //create account data post database 
     const createNewAccountDataPostDatabase = async (data) => {
