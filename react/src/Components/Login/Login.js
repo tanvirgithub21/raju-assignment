@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import UseGoogleSingInHook from '../../Hooks/UseGoogleSingInHook';
 import google from "../../Images/google.svg"
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
@@ -12,7 +11,7 @@ const Login = () => {
     // use context 
     const { firebaseAuth } = useContext(CentralStore)
     console.log(firebaseAuth);
-    const { LoginWithGmailAndPass } = firebaseAuth
+    const { LoginWithGmailAndPass, LoginAndSignInWithGoogle } = firebaseAuth
 
     //handle login function
     const handleLogIn = data => {
@@ -72,7 +71,7 @@ const Login = () => {
                     </form>
 
                     <div className='mb-2'>
-                        <button onClick={UseGoogleSingInHook} type="submit" className='bg-[#2563EB] w-full h-14 text-white text-lg font-medium border-2 border-[#2563EB] rounded-md flex items-center'>
+                        <button onClick={LoginAndSignInWithGoogle} type="submit" className='bg-[#2563EB] w-full h-14 text-white text-lg font-medium border-2 border-[#2563EB] rounded-md flex items-center'>
                             <img className='w-16 h-full rounded-l-md bg-white mr-6' src={google} alt="google icon" />
                             <span className='text-lg'>Sign in with google</span>
                         </button>
