@@ -14,7 +14,18 @@ route.get("/", async (req, res) => {
 
 // get a single post 
 route.get("/single/:id", async (req, res) => {
-    res.status(200).json("get post route")
+    const postId = req.params.id;
+
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            res.status(404).json({ message: 'Post not found' });
+        } else {
+            res.status(200).json({ message: 'Post found', post });
+        }
+    } catch (err) {
+        res.status(500).json({ error: "this is server side error" })
+    }
 })
 
 // post a single post data
