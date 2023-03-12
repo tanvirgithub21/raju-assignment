@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import axios from "axios";
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -13,7 +12,6 @@ const Auth = () => {
 
     //create account data post database 
     const createNewAccountDataPostDatabase = async (data) => {
-        console.log("createNewAccountDataPostDatabase");
         await axios({
             url: `${process.env.REACT_APP_SERVER_URL}user/create`,
             method: 'POST',
@@ -24,7 +22,6 @@ const Auth = () => {
             data: data
         })
             .then(res => {
-                console.log("create account res", res);
                 const { email } = res.data.result;
                 localStorage.setItem('login_user', email)
                 toast.success("Create account Successfully")
@@ -37,11 +34,9 @@ const Auth = () => {
         // get all username 
         axios(`${process.env.REACT_APP_SERVER_URL}user/all/username`)
             .then(async res => {
-                console.log("inner server post", res.data.result);
 
                 // check username valid or not 
                 const validUserName = res.data.result.includes(data.username)
-                console.log(validUserName);
 
                 if (!validUserName) {
                     // post new user data in database
@@ -52,7 +47,6 @@ const Auth = () => {
                 }
             }).catch(err => {
                 toast.error("Create account field")
-                console.log("inner server post");
 
             })
 
@@ -60,7 +54,6 @@ const Auth = () => {
 
     // create account function handle firebase
     firebaseAuth.CreateAccountEmailAndPass = (email, pass, postData) => {
-        console.log(postData);
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, pass)
             .then((userCredential) => {
@@ -94,7 +87,6 @@ const Auth = () => {
             })
             .catch(err => {
                 // getAuth().deleteUser(userUid)
-                console.log(err);
                 UseSingOut()
                 err && toast.error("Login field")
             })
@@ -109,7 +101,6 @@ const Auth = () => {
                 // Signed in 
                 const user = userCredential.user;
                 if (user) {
-                    console.log("enter save data", user, user.email);
                     //Save login data in database
                     loginAccountDataSaveDatabase({ email: user.email, provider: "email" })
                 }
@@ -127,16 +118,13 @@ const Auth = () => {
         await axios.get(`${process.env.REACT_APP_SERVER_URL}user`)
             .then((res) => {
                 const users = res.data.result
-                console.log("res", users);
-                if (!users.length === 0) {
+                if (users.length > 0) {
                     const exitUser = users.find(user => user.email === findUser)
                     exitOrNot = exitUser
                 } else {
-                    console.log("enter else");
                     exitOrNot = false
                 }
             }).catch(err => {
-                console.log("find user field", err);
             })
         return exitOrNot
     }
@@ -145,19 +133,15 @@ const Auth = () => {
     const makeRandomUsername = async (username) => {
 
         let finalUsername;
-        console.log("makeRandomUsername");
-        console.log(username);
         //removed username all space
         username = username.replace(/\s/g, "");
-        console.log(username);
 
         const randomUsername = `${username}${Math.floor(Math.random() * 1000)}`
-        console.log(randomUsername);
 
         // check valid username 
         await axios(`${process.env.REACT_APP_SERVER_URL}user/all/username`)
             .then(res => {
-                if (!res.data.result.length === 0) {
+                if (res.data.result.length > 0) {
 
                     const validUserName = res.data.result.includes(randomUsername)
                     if (!validUserName) {
@@ -175,28 +159,23 @@ const Auth = () => {
 
     }
 
-
+    //login and signIn with google handle function
     firebaseAuth.LoginAndSignInWithGoogle = () => {
         try {
             const provider = new GoogleAuthProvider();
             signInWithPopup(auth, provider)
                 .then(async (result) => {
                     const { email, displayName } = result.user;
-                    console.log(result.user);
                     if (email) {
                         //check user exit ot not
                         const existUser = await checkUserExitOrNot(email)
-                        console.log("existUser", existUser);
                         if (existUser) {
                             // update user by email
-                            console.log("update user");
                             loginAccountDataSaveDatabase({ email, provider: "google" })
 
                         } else {
-                            console.log("create new user");
                             // make random user name 
                             const username = await makeRandomUsername(displayName)
-                            console.log("username", username);
                             //new user data send database
                             const postData = {
                                 name: displayName,
@@ -204,7 +183,6 @@ const Auth = () => {
                                 username: username.toLowerCase(),
                                 loginRecords: [{ provider: "google" }],
                             };
-                            console.log(postData);
                             await createNewAccountDataPostDatabase(postData)
                         }
                     }

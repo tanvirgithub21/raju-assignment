@@ -8,7 +8,7 @@ import { CentralStore } from "../../Context/CentralStoreProvider/CentralStorePro
 const SingUp = () => {
   const { register, handleSubmit, reset } = useForm();
   const { firebaseAuth } = useContext(CentralStore);
-  const { CreateAccountEmailAndPass } = firebaseAuth;
+  const { CreateAccountEmailAndPass, LoginAndSignInWithGoogle } = firebaseAuth;
 
   // handle create new account
   const handleCreateEmailPass = async (data) => {
@@ -24,7 +24,6 @@ const SingUp = () => {
 
     if (email && name && password && confirm_password) {
       if (password === confirm_password) {
-        console.log(postData);
         CreateAccountEmailAndPass(email, password, postData);
         reset();
       }
@@ -139,6 +138,7 @@ const SingUp = () => {
 
           <div className="mb-2">
             <button
+              onClick={LoginAndSignInWithGoogle}
               type="submit"
               className="bg-[#2563EB] w-full h-14 text-white text-lg font-medium border-2 border-[#2563EB] rounded-md flex items-center"
             >

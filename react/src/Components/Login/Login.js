@@ -10,7 +10,6 @@ const Login = () => {
 
     // use context 
     const { firebaseAuth } = useContext(CentralStore)
-    console.log(firebaseAuth);
     const { LoginWithGmailAndPass, LoginAndSignInWithGoogle } = firebaseAuth
 
     //handle login function

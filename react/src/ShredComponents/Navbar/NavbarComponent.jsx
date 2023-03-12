@@ -12,9 +12,7 @@ const NavbarComponent = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
         setUser(user);
-        navigate("/");
       } else {
         // signOut(auth);
         setUser(false);
@@ -64,23 +62,25 @@ const NavbarComponent = ({ children }) => {
                 </Dropdown>
                 <Navbar.Toggle />
                 <div className="ml-8">
-                  <Button
+                  <button
                     onClick={UseSingOut}
-                    className="bg-[#D40600] hover:bg-[#b1120d]"
+                    className="px-4 py-2 border-none outline-none font-semibold rounded-lg text-white ease-in-out duration-100 bg-[#ec1010] hover:bg-[#c70000]"
                   >
                     LOGOUT
-                  </Button>
+                  </button>
                 </div>
               </>
             ) : (
               <div className="flex gap-5">
                 <Link to="/login">
-                  <Button>LOGIN</Button>
+                  <button className="px-4 py-2 border-none outline-none font-medium rounded-lg text-white ease-in-out duration-100 bg-[#1c64f2] hover:bg-[#3475f6]">
+                    LOGIN
+                  </button>
                 </Link>
                 <Link to="/sing-up">
-                  <Button className="bg-[#00B241] hover:bg-[#029738]">
+                  <button className="px-4 py-2 border-none outline-none font-medium rounded-lg text-white ease-in-out duration-100 bg-[#00B241] hover:bg-[#029738]">
                     SING UP
-                  </Button>
+                  </button>
                 </Link>
               </div>
             )}
