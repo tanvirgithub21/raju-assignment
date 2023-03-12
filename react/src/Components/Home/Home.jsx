@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AllUser from "../../ShredComponents/AllUser/AllUser";
 import Sidebar from "../../ShredComponents/Sidebar/Sidebar";
 import SinglePost from "../../ShredComponents/SinglePost/SinglePost";
 import CreatePost from "../../ShredComponents/CreatePost/CreatePost";
+import axios from "axios";
 
 const Home = () => {
+  const [allPost, setAllPost] = useState([]);
+  const [allPostLoading, setAllPostLoading] = useState(false);
+  const [allPostError, setAllPostError] = useState(false);
+
+  useEffect(() => {
+    setAllPostLoading(true);
+    axios(`${process.env.REACT_APP_SERVER_URL}post`, {
+      method: "GET",
+    })
+      .then((data) => {
+        setAllPost(data.data);
+        setAllPostLoading(false);
+      })
+      .catch((err) => {
+        setAllPostError(err);
+        allPostLoading(false);
+        allPostError(err);
+      });
+  }, []);
+
+  console.log(allPost);
+
   return (
     <div className="flex relative">
       {/* main app left sidebar */}
@@ -14,16 +37,11 @@ const Home = () => {
       {/* Home component  */}
       <div className="w-full max-w-[40rem]">
         <CreatePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
-        <SinglePost />
+        {allPost.result &&
+          allPost.result.map((post) => {
+            console.log("map", post);
+            return <SinglePost kay={post._id} post={post} />;
+          })}
       </div>
 
       {/* main app right sidebar */}
