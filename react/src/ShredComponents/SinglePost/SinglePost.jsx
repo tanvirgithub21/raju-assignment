@@ -7,6 +7,7 @@ import Moment from "react-moment";
 import deletePost from "../../Hooks/PostFetchs/deletePost";
 
 const SinglePost = ({ post }) => {
+  console.log("post", post);
   const { _id, title, imageUrl, time, author, likes } = post;
   const { pathname } = useLocation();
 
@@ -16,7 +17,7 @@ const SinglePost = ({ post }) => {
         {/* card header  */}
         <div className="flex justify-between mb-3">
           <div className="flex gap-3">
-            {author.imageUrl ? (
+            {author?.imageUrl ? (
               <img
                 className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
                 src="https://qph.cf2.quoracdn.net/main-qimg-eb86c6a549e2e52fc89752a002660e97-pjlq"
@@ -24,13 +25,13 @@ const SinglePost = ({ post }) => {
               />
             ) : (
               <div className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 text-4xl font-semibold text-blue-500 flex justify-center items-center">
-                {author.name.slice(0, 1)}
+                {author?.name?.slice(0, 1)}
               </div>
             )}
 
             <div>
               <h4 className="text-lg w-full font-semibold text-gray-dark">
-                {author.name}
+                {author?.name}
               </h4>
               <h6 className="text-sm font-md font-medium text-gray-600">
                 <Moment fromNow>{time}</Moment>
@@ -69,7 +70,7 @@ const SinglePost = ({ post }) => {
           <AiTwotoneLike className="mr-1 mb-1 text-xl" />
           Like{" "}
           <span className="ml-2 font-semibold text-sm text-gray500">
-            {likes.length} likes
+            {likes?.length} likes
           </span>
         </div>
         <div className="flex items-top text-md text-gray-800 font-medium px-3 py-2 mr-6">

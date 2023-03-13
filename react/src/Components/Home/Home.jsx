@@ -16,7 +16,7 @@ const Home = () => {
       method: "GET",
     })
       .then((data) => {
-        setAllPost(data.data);
+        setAllPost(data.data.result);
         setAllPostLoading(false);
       })
       .catch((err) => {
@@ -26,7 +26,7 @@ const Home = () => {
       });
   }, []);
 
-  console.log(allPost);
+  console.log("allPost", allPost);
 
   return (
     <div className="flex relative">
@@ -37,9 +37,8 @@ const Home = () => {
       {/* Home component  */}
       <div className="w-full max-w-[40rem]">
         <CreatePost />
-        {allPost.result &&
-          allPost.result.map((post) => {
-            console.log("map", post);
+        {allPost &&
+          allPost.map((post) => {
             return <SinglePost kay={post._id} post={post} />;
           })}
       </div>
