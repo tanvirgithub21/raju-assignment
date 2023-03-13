@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AiTwotoneLike } from "react-icons/ai";
 import { TbShare3 } from "react-icons/tb";
 import { GoPlus } from "react-icons/go";
 import { useLocation } from "react-router-dom";
 import Moment from "react-moment";
-import deletePost from "../../Hooks/PostFetchs/deletePost";
+import { PostStore } from "../../Context/PostStoreProvider/PostStoreProvider";
 
 const SinglePost = ({ post }) => {
+  const { deletePost } = useContext(PostStore);
+  const [result, loading, error, deletePostFN] = deletePost;
+
   console.log("post", post);
   const { _id, title, imageUrl, time, author, likes } = post;
   const { pathname } = useLocation();
@@ -41,7 +44,7 @@ const SinglePost = ({ post }) => {
           {/* delete post button  */}
           {pathname === "/my-post" && (
             <div
-              onClick={() => deletePost(_id)}
+              onClick={() => deletePostFN(_id)}
               className="cursor-pointer w-8 h-8 p-1 text-2xl rotate-45 bg-gray-200 rounded-full"
             >
               <GoPlus />
