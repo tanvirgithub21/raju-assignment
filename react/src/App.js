@@ -4,12 +4,15 @@ import routers from './Routes/routers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FirebaseAuthProvider from './Context/FirebaseAuthProvider/FirebaseAuthProvider';
+import PostStoreProvider from './Context/PostStoreProvider/PostStoreProvider';
 
 function App() {
   return (
     <FirebaseAuthProvider>
-      <RouterProvider router={routers} />
-      <ToastContainer />
+      <PostStoreProvider>
+        <RouterProvider router={routers} />
+        <ToastContainer />
+      </PostStoreProvider>
     </FirebaseAuthProvider>
 
 

@@ -13,7 +13,7 @@ import auth from "../../fierbaseConfig";
 import UseSingOut from "../../Hooks/UseSignOut";
 export const FirebaseAuth = createContext();
 
-const FirebaseAuthProvider = (props) => {
+const FirebaseAuthProvider = ({ children }) => {
   //create account data post database
   const createNewAccountDataPostDatabase = async (data) => {
     await axios({
@@ -221,7 +221,7 @@ const FirebaseAuthProvider = (props) => {
 
   return (
     <FirebaseAuth.Provider value={firebaseStore}>
-      {props.children}
+      {children}
     </FirebaseAuth.Provider>
   );
 };

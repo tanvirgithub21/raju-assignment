@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import AllUser from "../../ShredComponents/AllUser/AllUser";
 import Sidebar from "../../ShredComponents/Sidebar/Sidebar";
 import SinglePost from "../../ShredComponents/SinglePost/SinglePost";
 import CreatePost from "../../ShredComponents/CreatePost/CreatePost";
-import axios from "axios";
+import { PostStore } from "../../Context/PostStoreProvider/PostStoreProvider";
 
 const Home = () => {
-  const [allPost, setAllPost] = useState([]);
-  const [allPostLoading, setAllPostLoading] = useState(false);
-  const [allPostError, setAllPostError] = useState(false);
+  const { getPost } = useContext(PostStore);
+  const [allPost, loading, err, getAllPostFN] = getPost;
 
   useEffect(() => {
-    setAllPostLoading(true);
-    axios(`${process.env.REACT_APP_SERVER_URL}post`, {
-      method: "GET",
-    })
-      .then((data) => {
-        setAllPost(data.data.result);
-        setAllPostLoading(false);
-      })
-      .catch((err) => {
-        setAllPostError(err);
-        allPostLoading(false);
-        allPostError(err);
-      });
+    getAllPostFN();
   }, []);
-
-  console.log("allPost", allPost);
 
   return (
     <div className="flex relative">
@@ -37,8 +22,9 @@ const Home = () => {
       {/* Home component  */}
       <div className="w-full max-w-[40rem]">
         <CreatePost />
-        {allPost &&
-          allPost.map((post) => {
+        {loading && <p>Loading ...</p>}
+        {allPost.result &&
+          allPost.result.map((post) => {
             return <SinglePost kay={post._id} post={post} />;
           })}
       </div>
