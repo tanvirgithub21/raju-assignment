@@ -3,10 +3,11 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import React, { createContext } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import auth from "../../fierbaseConfig";
 import UseSingOut from "../../Hooks/UseSignOut";
@@ -197,10 +198,25 @@ const FirebaseAuthProvider = (props) => {
     }
   };
 
+  // current login user
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("user observing");
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const firebaseStore = {
     CreateAccountEmailAndPass,
     LoginWithGmailAndPass,
     LoginAndSignInWithGoogle,
+    currentUser: [user, loading],
   };
 
   return (

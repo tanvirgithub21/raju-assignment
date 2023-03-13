@@ -1,32 +1,28 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import google from "../../Images/google.svg"
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
-import { CentralStore } from '../../Context/CentralStoreProvider/CentralStoreProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import auth from '../../fierbaseConfig';
 import { FirebaseAuth } from '../../Context/FirebaseAuthProvider/FirebaseAuthProvider';
 
 const Login = () => {
+    const { LoginWithGmailAndPass, LoginAndSignInWithGoogle, currentUser } = useContext(FirebaseAuth)
     const { register, handleSubmit, reset } = useForm();
     const loginImageUrl = "https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
 
-    // navigate home targeted route
+    //get current user
+    const [user] = currentUser;
+
+    // navigate home || targeted route
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigate(from, { replace: true });
-            }
-        });
-    }, [navigate, from]);
+    if (user) {
+        navigate(from, { replace: true });
+    }
 
     // use context 
-    const { LoginWithGmailAndPass, LoginAndSignInWithGoogle } = useContext(FirebaseAuth)
 
     //handle login function
     const handleLogIn = data => {

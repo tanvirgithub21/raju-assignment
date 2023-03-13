@@ -1,22 +1,24 @@
-import { onAuthStateChanged } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import auth from "../../fierbaseConfig";
+import { FirebaseAuth } from "../../Context/FirebaseAuthProvider/FirebaseAuthProvider";
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
-  const [user, setUser] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const { currentUser } = useContext(FirebaseAuth);
+  const [user, loading] = currentUser;
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("user observing");
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
+  // const [user, setUser] = useState(true);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     console.log("user observing");
+  //     setUser(currentUser);
+  //     setLoading(false);
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
 
   console.log("in private route", user, loading);
   if (loading) {

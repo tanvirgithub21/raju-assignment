@@ -1,31 +1,27 @@
 /* eslint-disable no-const-assign */
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import google from "../../Images/google.svg";
 import sing_up from "../../Images/sing_up.png";
 import { useForm } from "react-hook-form";
-import { CentralStore } from "../../Context/CentralStoreProvider/CentralStoreProvider";
 import { useLocation, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import auth from "../../fierbaseConfig";
 import { FirebaseAuth } from "../../Context/FirebaseAuthProvider/FirebaseAuthProvider";
 
 const SingUp = () => {
   const { register, handleSubmit, reset } = useForm();
-  const { CreateAccountEmailAndPass, LoginAndSignInWithGoogle } =
+  const { CreateAccountEmailAndPass, LoginAndSignInWithGoogle, currentUser } =
     useContext(FirebaseAuth);
+
+  //get current user
+  const [user] = currentUser;
 
   // navigate home targeted route
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate(from, { replace: true });
-      }
-    });
-  }, [navigate, from]);
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
   // handle create new account
   const handleCreateEmailPass = async (data) => {
