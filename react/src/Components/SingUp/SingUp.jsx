@@ -7,11 +7,12 @@ import { CentralStore } from "../../Context/CentralStoreProvider/CentralStorePro
 import { useLocation, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import auth from "../../fierbaseConfig";
+import { FirebaseAuth } from "../../Context/FirebaseAuthProvider/FirebaseAuthProvider";
 
 const SingUp = () => {
   const { register, handleSubmit, reset } = useForm();
-  const { firebaseAuth } = useContext(CentralStore);
-  const { CreateAccountEmailAndPass, LoginAndSignInWithGoogle } = firebaseAuth;
+  const { CreateAccountEmailAndPass, LoginAndSignInWithGoogle } =
+    useContext(FirebaseAuth);
 
   // navigate home targeted route
   const navigate = useNavigate();

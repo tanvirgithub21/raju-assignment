@@ -6,6 +6,7 @@ import { CentralStore } from '../../Context/CentralStoreProvider/CentralStorePro
 import { useLocation, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import auth from '../../fierbaseConfig';
+import { FirebaseAuth } from '../../Context/FirebaseAuthProvider/FirebaseAuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, reset } = useForm();
@@ -25,8 +26,7 @@ const Login = () => {
     }, [navigate, from]);
 
     // use context 
-    const { firebaseAuth } = useContext(CentralStore)
-    const { LoginWithGmailAndPass, LoginAndSignInWithGoogle } = firebaseAuth
+    const { LoginWithGmailAndPass, LoginAndSignInWithGoogle } = useContext(FirebaseAuth)
 
     //handle login function
     const handleLogIn = data => {

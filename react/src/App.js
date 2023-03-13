@@ -4,13 +4,16 @@ import routers from './Routes/routers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CentralStoreProvider from './Context/CentralStoreProvider/CentralStoreProvider';
+import FirebaseAuthProvider from './Context/FirebaseAuthProvider/FirebaseAuthProvider';
 
 function App() {
   return (
-    <CentralStoreProvider>
-      <RouterProvider router={routers} />
-      <ToastContainer />
-    </CentralStoreProvider>
+    <FirebaseAuthProvider>
+      <CentralStoreProvider>
+        <RouterProvider router={routers} />
+        <ToastContainer />
+      </CentralStoreProvider>
+    </FirebaseAuthProvider>
 
 
   );
