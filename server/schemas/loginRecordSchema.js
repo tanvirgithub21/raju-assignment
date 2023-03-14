@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    time: {
+        type: Date,
+        default: Date.now
+    },
     loginRecords: [loginRecordSchema]
 });
 
