@@ -40,13 +40,11 @@ const PostStoreProvider = ({ children }) => {
     setDeletePostLoading(true);
     axios
       .delete(`${process.env.REACT_APP_SERVER_URL}post/delete/${id}`)
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         setDeletePostResult(data.result);
-        console.log(data.result);
         const deletePostRemove = allPosts.result.filter(
           (post) => post._id !== data.result._id
         );
-        console.log(deletePostRemove);
         setAllPosts({
           ...allPosts,
           result: deletePostRemove,
@@ -67,27 +65,6 @@ const PostStoreProvider = ({ children }) => {
     DeletePost,
   ];
   //delete single post end ^_^
-
-  //Delete uploaded image start
-  const deleteImage = async (deleteImageUrl) => {
-    let result = false;
-
-    const deleteUrl = `https://api.imgbb.com/1/delete?url=${deleteImageUrl}&key=${process.env.REACT_APP_IMAGE_UPLOAD_APIKEY}`;
-
-    // delete image hear
-    await axios
-      .get(deleteUrl)
-      .then(({ data }) => {
-        //delete Success
-        result = data;
-      })
-      .catch((err) => {
-        //delete error
-      });
-
-    return result;
-  };
-  //Delete uploaded image end ^_^
 
   //add new post start
   const [addPostResult, setAddPostResult] = useState(Object);
@@ -132,7 +109,6 @@ const PostStoreProvider = ({ children }) => {
     const uploadImageData = await uploadImage(data.image);
     if (uploadImageData) {
       //upload image successfully
-      console.log("upload image successfully");
       const postData = {
         title: data.title,
         imageUrl: uploadImageData.display_url,
@@ -154,8 +130,6 @@ const PostStoreProvider = ({ children }) => {
         toast.success("Post successfully");
       } else {
         // upload field
-        //delete uploaded image
-        await deleteImage(uploadImageData.delete_url);
         setAddPostError("Upload Post failed");
         setAddPostLoading(false);
         toast.error("Upload Post failed");
