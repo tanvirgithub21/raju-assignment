@@ -17,10 +17,14 @@ const MyPost = () => {
     allPostFN();
   }, []);
 
+  // filter my all posts
   const loginUserEmail = UseLoginUserEmail();
   const myPost = allPost?.result?.filter(
     (post) => post.author.email === loginUserEmail
   );
+
+  // sort data by uploaded time
+  const sortData = myPost.sort((a, b) => new Date(b.time) - new Date(a.time));
 
   return (
     <div className="flex relative">
@@ -32,9 +36,9 @@ const MyPost = () => {
       <div className="w-full max-w-[40rem]">
         <CreatePost />
         {loading && <p>Loading ...</p>}
-        {myPost &&
-          myPost.map((post) => <SinglePost key={post._id} post={post} />)}
-        {myPost?.length <= 0 && (
+        {sortData &&
+          sortData.map((post) => <SinglePost key={post._id} post={post} />)}
+        {sortData?.length <= 0 && (
           <p className="text-xl md:text-2xl font-semibold text-gray-500">
             You haven't posted anything yet
           </p>

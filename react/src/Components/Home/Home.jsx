@@ -13,6 +13,11 @@ const Home = () => {
     getAllPostFN();
   }, []);
 
+  // sort data by uploaded time
+  const sortData = allPost.result.sort(
+    (a, b) => new Date(b.time) - new Date(a.time)
+  );
+
   return (
     <div className="flex relative">
       {/* main app left sidebar */}
@@ -23,8 +28,8 @@ const Home = () => {
       <div className="w-full max-w-[40rem]">
         <CreatePost />
         {loading && <p>Loading ...</p>}
-        {allPost.result &&
-          allPost.result.map((post) => {
+        {sortData &&
+          sortData.map((post) => {
             return <SinglePost kay={post._id} post={post} />;
           })}
       </div>
