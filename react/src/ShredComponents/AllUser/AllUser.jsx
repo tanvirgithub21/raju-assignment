@@ -1,18 +1,14 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
+import { FirebaseAuth } from "../../Context/FirebaseAuthProvider/FirebaseAuthProvider";
 import SingleUser from "./SingleUser";
 
 const AllUser = () => {
-  const [allUsers, setAllUsers] = useState(Array);
+  const { getAllUsers } = useContext(FirebaseAuth);
+  const [allUsers, loading, err, GetAllUsersFN] = getAllUsers;
+  // const [allUsers, setAllUsers] = useState(Array);
 
   useEffect(() => {
-    axios(`${process.env.REACT_APP_SERVER_URL}user`, {
-      method: "GET",
-    })
-      .then((data) => {
-        setAllUsers(data.data.result);
-      })
-      .catch((err) => {});
+    GetAllUsersFN();
   }, []);
 
   return (
@@ -21,12 +17,12 @@ const AllUser = () => {
       <div className="bg-gray-100 px-4 py-2 rounded-md w-full flex justify-between sticky top-0 custom_scroll_bar">
         <h3 className="text-xl font-semibold ">All Users </h3>
         <p className="bg-blue-600 w-7 h-7 text-white text-sm font-bold p-1 rounded-full flex justify-center items-center">
-          {allUsers.length}
+          {allUsers?.result?.length}
         </p>
       </div>
-
+      {loading && <p>Loading...</p>}
       {/* all user show  */}
-      {allUsers.map((user) => (
+      {allUsers?.result?.map((user) => (
         <SingleUser key={user._id} user={user} />
       ))}
     </div>

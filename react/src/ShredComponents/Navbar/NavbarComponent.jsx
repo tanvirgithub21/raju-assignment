@@ -1,6 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../fierbaseConfig";
 import UseSingOut from "../../Hooks/UseSignOut";

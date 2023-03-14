@@ -212,11 +212,48 @@ const FirebaseAuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  //get all users
+  const [allUsers, setAllUsers] = useState(Array);
+  const [allUsersLoading, setAllUsersLoading] = useState(false);
+  const [allUsersError, setAllUsersError] = useState(Object);
+  const GetAllUsers = async () => {
+    setAllUsersLoading(true);
+    await axios(`${process.env.REACT_APP_SERVER_URL}user`, {
+      method: "GET",
+    })
+      .then((data) => {
+        setAllUsers(data.data);
+        setAllUsersLoading(false);
+      })
+      .catch((err) => {
+        setAllUsersError(err);
+        setAllUsersLoading(false);
+      });
+  };
+  const getAllUsers = [allUsers, allUsersLoading, allUsersError, GetAllUsers];
+  useEffect(() => {
+    GetAllUsers();
+  }, []);
+
+  //check login user admin status
+  const CheckAdmin = () => {
+    const loginUser = allUsers.result.find(
+      (databaseUser) => databaseUser.email === user.email
+    );
+    if (loginUser) {
+      return loginUser.admin;
+    }
+  };
+
+  // console.log(allUsers);
+
   const firebaseStore = {
     CreateAccountEmailAndPass,
     LoginWithGmailAndPass,
     LoginAndSignInWithGoogle,
     currentUser: [user, loading],
+    getAllUsers,
+    CheckAdmin,
   };
 
   return (

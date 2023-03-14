@@ -34,6 +34,11 @@ const MyPost = () => {
         {loading && <p>Loading ...</p>}
         {myPost &&
           myPost.map((post) => <SinglePost key={post._id} post={post} />)}
+        {myPost?.length <= 0 && (
+          <p className="text-xl md:text-2xl font-semibold text-gray-500">
+            You haven't posted anything yet
+          </p>
+        )}
       </div>
 
       {/* main app right sidebar */}

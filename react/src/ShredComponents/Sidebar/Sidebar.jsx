@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { HiHome } from "react-icons/hi";
 import { BsPostcardHeart, BsSearch } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { MdSpaceDashboard } from "react-icons/md";
+import { FirebaseAuth } from "../../Context/FirebaseAuthProvider/FirebaseAuthProvider";
 
 const Sidebar = () => {
+  const { CheckAdmin } = useContext(FirebaseAuth);
+  const adminStatus = CheckAdmin();
   // nav style css variable
   const deActive =
     "text-lg text-gray-dark font-semibold mb-3 p-2 hover:bg-gray-100 w-full rounded-xl flex items-center cursor-pointer";
@@ -48,15 +51,17 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink
-            to="/admin"
-            className={({ isActive }) => (isActive ? active : deActive)}
-          >
-            <span className="mr-2">
-              <MdSpaceDashboard size="1.8rem" />
-            </span>
-            Dashboard
-          </NavLink>
+          {adminStatus && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) => (isActive ? active : deActive)}
+            >
+              <span className="mr-2">
+                <MdSpaceDashboard size="1.8rem" />
+              </span>
+              Dashboard
+            </NavLink>
+          )}
         </li>
       </ul>
     </div>
