@@ -12,12 +12,8 @@ const AllUser = () => {
       .then((data) => {
         setAllUsers(data.data.result);
       })
-      .catch((err) => {
-        console.lgo(err);
-      });
+      .catch((err) => {});
   }, []);
-
-  console.log(allUsers);
 
   return (
     <div className="w-[23rem] h-[calc(100vh-95px)] pl-10 pt-6 pr-4 sticky top-[85px] overflow-y-scroll">

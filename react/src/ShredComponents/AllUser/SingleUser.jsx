@@ -2,7 +2,6 @@ import React from "react";
 
 const SingleUser = ({ user }) => {
   const { name, username, imageUrl = "" } = user;
-  console.log(name, username, imageUrl);
   return (
     <div className="flex gap-3 px-2 py-1 bg-gray-100 rounded-md my-3">
       {imageUrl ? (

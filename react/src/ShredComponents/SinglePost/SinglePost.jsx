@@ -10,7 +10,6 @@ const SinglePost = ({ post }) => {
   const { deletePost } = useContext(PostStore);
   const [result, loading, error, deletePostFN] = deletePost;
 
-  console.log("post", post);
   const { _id, title, imageUrl, time, author, likes } = post;
   const { pathname } = useLocation();
 

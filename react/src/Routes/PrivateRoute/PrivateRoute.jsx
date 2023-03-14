@@ -8,19 +8,6 @@ const PrivateRoute = ({ children }) => {
   const { currentUser } = useContext(FirebaseAuth);
   const [user, loading] = currentUser;
 
-  // const [user, setUser] = useState(true);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     console.log("user observing");
-  //     setUser(currentUser);
-  //     setLoading(false);
-  //   });
-  //   return () => unsubscribe();
-  // }, []);
-
-  console.log("in private route", user, loading);
   if (loading) {
     return <progress className="progress w-56"></progress>;
   }

@@ -1,17 +1,36 @@
 import { Avatar, Button, Modal, Textarea } from "flowbite-react";
-import { FcAddImage } from "react-icons/fc";
 import { BiImageAdd } from "react-icons/bi";
 import { MdCancel } from "react-icons/md";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { PostStore } from "../../Context/PostStoreProvider/PostStoreProvider";
+import { toast } from "react-toastify";
 
 const CreatePost = () => {
+  const { addNewPost } = useContext(PostStore);
+  const [postResult, loading, message, addNewPostFN] = addNewPost;
+  const { register, handleSubmit, reset } = useForm();
   // image local state
-  const [showImageAdd, setShowImageAdd] = useState(false);
   const [image, setImage] = useState(false);
 
   // modal toggle handler function
   const [modalToggle, setModalToggle] = useState(false);
   const modalToggleHandle = () => setModalToggle(!modalToggle);
+
+  const onSubmit = async (data) => {
+    const postData = {
+      title: data.title,
+      image,
+    };
+    await addNewPostFN(postData);
+    reset();
+    setImage(false);
+  };
+
+  useEffect(() => {
+    message?.message && toast.success(message?.message);
+    message?.error && toast.error(message?.error);
+  }, [message]);
 
   return (
     <React.Fragment>
@@ -36,7 +55,6 @@ const CreatePost = () => {
         size="2xl"
         popup={true}
         onClose={() => {
-          setShowImageAdd(false);
           modalToggleHandle();
         }}
       >
@@ -46,25 +64,16 @@ const CreatePost = () => {
           </h1>
         </Modal.Header>
         <Modal.Body className="h-auto">
-          <Textarea
-            id="comment"
-            placeholder="Leave a comment..."
-            required={true}
-            rows={5}
-          />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Textarea
+              {...register("title", { required: true })}
+              id="comment"
+              placeholder="Leave a comment..."
+              required={true}
+              rows={5}
+            />
 
-          {/* image add button  */}
-          <div
-            onClick={() => setShowImageAdd(true)}
-            className={`w-full bg-gray-100 rounded-xl p-3 font-medium text-gray-400 my-3 ${
-              showImageAdd && "hidden"
-            }`}
-          >
-            <FcAddImage size="1.8rem" />
-          </div>
-
-          {/* image add and preview box  */}
-          {showImageAdd && (
+            {/* image add and preview box  */}
             <div className="w-full border-4 rounded-md my-4 h-[20rem] relative overflow-hidden">
               {/* input field label  */}
               <label
@@ -79,6 +88,7 @@ const CreatePost = () => {
                 id="add_image"
                 type="file"
                 className="hidden"
+                {...register("image", { required: true })}
                 onChange={(e) => setImage(e.target.files[0])}
                 accept="image/x-png,image/gif,image/jpeg"
               ></input>
@@ -100,9 +110,12 @@ const CreatePost = () => {
                 </div>
               )}
             </div>
-          )}
 
-          <Button className="w-full bg-[#1A6ED8]">Post</Button>
+            <Button type="submit" className="w-full bg-[#1A6ED8]">
+              Post
+            </Button>
+            {loading && <p>loading</p>}
+          </form>
         </Modal.Body>
       </Modal>
     </React.Fragment>

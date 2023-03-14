@@ -1,9 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
+import { FirebaseAuth } from "../FirebaseAuthProvider/FirebaseAuthProvider";
 export const PostStore = createContext();
 const PostStoreProvider = ({ children }) => {
+  // get current user info
+  const { currentUser } = useContext(FirebaseAuth);
+  const [user, loading] = currentUser;
+
   // Get all posts start
   const [allPosts, setAllPosts] = useState(Object);
   const [allPostLoading, setAllPostsLoading] = useState(false);
@@ -61,10 +66,117 @@ const PostStoreProvider = ({ children }) => {
   ];
   //delete single post end ^_^
 
+  //Delete uploaded image start
+  const deleteImage = async (deleteImageUrl) => {
+    let result = false;
+
+    const deleteUrl = `https://api.imgbb.com/1/delete?url=${deleteImageUrl}&key=${process.env.REACT_APP_IMAGE_UPLOAD_APIKEY}`;
+
+    // delete image hear
+    await axios
+      .get(deleteUrl)
+      .then(({ data }) => {
+        //delete Success
+        result = data;
+      })
+      .catch((err) => {
+        //delete error
+      });
+
+    return result;
+  };
+  //Delete uploaded image end ^_^
+
+  //add new post start
+  const [addPostResult, setAddPostResult] = useState(Object);
+  const [addPostLoading, setAddPostLoading] = useState(false);
+  const [addPostMessage, setAddPostMessage] = useState(null);
+
+  //upload image in imageBB server start
+  const uploadImage = async (imageFile) => {
+    let finalResult = false;
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    formData.append("key", `${process.env.REACT_APP_IMAGE_UPLOAD_APIKEY}`);
+
+    await axios
+      .post(`${process.env.REACT_APP_IMAGE_UPLOAD_URL}`, formData)
+      .then(({ data }) => {
+        finalResult = data.data;
+      })
+      .catch((err) => {});
+    return finalResult;
+  };
+  //upload image in imageBB server end ^___^
+
+  //upload post data database start
+  const uploadPostDatabase = async (data) => {
+    let result = false;
+    await axios
+      .post(`${process.env.REACT_APP_SERVER_URL}post`, data)
+      .then(({ data }) => {
+        //post data success
+        result = data;
+      })
+      .catch((err) => {
+        //post data error
+      });
+    return result;
+  };
+  //upload post data database end ^___^
+
+  const AddNewPost = async (data) => {
+    setAddPostLoading(true);
+    const uploadImageData = await uploadImage(data.image);
+    if (uploadImageData) {
+      //upload image successfully
+      console.log("upload image successfully");
+      const postData = {
+        title: data.title,
+        imageUrl: uploadImageData.display_url,
+        imageDeleteUrl: uploadImageData.delete_url,
+        author: {
+          name: user?.displayName,
+          email: user?.email,
+        },
+      };
+      const result = await uploadPostDatabase(postData);
+      if (result) {
+        //upload success
+        setAllPosts({
+          ...allPosts,
+          result: [...allPosts.result, result.result],
+        });
+        setAddPostResult(result);
+        setAddPostLoading(false);
+        setAddPostMessage({ message: "Post successfully" });
+      } else {
+        // upload field
+        //delete uploaded image
+        await deleteImage(uploadImageData.delete_url);
+        setAddPostMessage({ error: "Upload Post failed" });
+        setAddPostLoading(false);
+      }
+    } else {
+      //upload image error
+      setAddPostMessage({ error: "Upload Post failed" });
+      setAddPostLoading(false);
+    }
+  };
+
+  const addNewPost = [
+    addPostResult,
+    addPostLoading,
+    addPostMessage,
+    AddNewPost,
+  ];
+  //add new post end ^_^
+
   // Final value
   const postStore = {
     getPost,
     deletePost,
+    addNewPost,
   };
 
   return <PostStore.Provider value={postStore}>{children}</PostStore.Provider>;

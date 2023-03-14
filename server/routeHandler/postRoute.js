@@ -49,7 +49,7 @@ route.post("/", async (req, res) => {
             res.status(500).json({ error: "this is server side error" })
         } else {
             res.status(200).json({
-                message: "Account create successfully",
+                message: "Add post successfully",
                 result,
             })
         }

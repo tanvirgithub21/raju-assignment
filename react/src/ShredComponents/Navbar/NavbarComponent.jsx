@@ -16,7 +16,6 @@ const NavbarComponent = ({ children }) => {
       } else {
         // signOut(auth);
         setUser(false);
-        // console.log("logout on state change");
       }
     });
   }, [navigate]);
