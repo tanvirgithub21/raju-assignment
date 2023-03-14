@@ -144,11 +144,51 @@ const PostStoreProvider = ({ children }) => {
   const addNewPost = [addPostResult, addPostLoading, addPostError, AddNewPost];
   //add new post end ^_^
 
+  //show is like start
+  const IsLike = (post) => {
+    console.log(post);
+    if (post?.likes && post?.likes.length > 0) {
+      const result = post?.likes.find((like) => like.user === user?.email);
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  };
+  //show is like end ^_^
+
+  // post like function start
+  const LikePost = async (id) => {
+    await axios
+      .put(`${process.env.REACT_APP_SERVER_URL}post/like/${id}`, {
+        user: user.email,
+      })
+      .then(({ data }) => {
+        // like or disliked success
+        const removedCurrentPost = allPosts.result.filter(
+          (post) => post._id !== id
+        );
+        setAllPosts({
+          ...allPosts,
+          result: [...removedCurrentPost, data.result],
+        });
+      })
+      .catch((err) => {
+        //axios error
+        console.log(err);
+      });
+  };
+  // post like function end ^_^
+
   // Final value
   const postStore = {
     getPost,
     deletePost,
     addNewPost,
+    IsLike,
+    LikePost,
   };
 
   return <PostStore.Provider value={postStore}>{children}</PostStore.Provider>;

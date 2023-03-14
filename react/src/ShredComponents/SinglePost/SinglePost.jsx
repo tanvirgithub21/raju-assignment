@@ -7,11 +7,13 @@ import Moment from "react-moment";
 import { PostStore } from "../../Context/PostStoreProvider/PostStoreProvider";
 
 const SinglePost = ({ post }) => {
-  const { deletePost } = useContext(PostStore);
+  const { deletePost, IsLike, LikePost } = useContext(PostStore);
   const [result, loading, error, deletePostFN] = deletePost;
 
   const { _id, title, imageUrl, time, author, likes } = post;
   const { pathname } = useLocation();
+
+  const isLikeResult = IsLike(post);
 
   return (
     <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-9">
@@ -68,9 +70,14 @@ const SinglePost = ({ post }) => {
 
       {/* cart action */}
       <div className="flex justify-between my-2">
-        <div className="flex items-center items-top text-md text-gray-800 font-medium px-3 py-2 ml-6">
-          <AiTwotoneLike className="mr-1 mb-1 text-xl" />
-          Like{" "}
+        <div
+          onClick={() => LikePost(_id)}
+          className="flex items-center items-top text-md text-gray-800 font-medium px-3 py-2 ml-6 cursor-pointer"
+        >
+          <AiTwotoneLike
+            className={`mr-1 mb-1 text-xl ${isLikeResult && "text-blue-500"}`}
+          />
+          <span className={`${isLikeResult && "text-blue-500"}`}>Like</span>{" "}
           <span className="ml-2 font-semibold text-sm text-gray500">
             {likes?.length} likes
           </span>
