@@ -42,9 +42,11 @@ const PostStoreProvider = ({ children }) => {
       .delete(`${process.env.REACT_APP_SERVER_URL}post/delete/${id}`)
       .then(({ data }) => {
         setDeletePostResult(data.result);
+        console.log(data.result);
         const deletePostRemove = allPosts.result.filter(
-          (post) => post.author.email !== data.result.author.email
+          (post) => post._id !== data.result._id
         );
+        console.log(deletePostRemove);
         setAllPosts({
           ...allPosts,
           result: deletePostRemove,
@@ -90,7 +92,7 @@ const PostStoreProvider = ({ children }) => {
   //add new post start
   const [addPostResult, setAddPostResult] = useState(Object);
   const [addPostLoading, setAddPostLoading] = useState(false);
-  const [addPostMessage, setAddPostMessage] = useState(null);
+  const [addPostError, setAddPostError] = useState(null);
 
   //upload image in imageBB server start
   const uploadImage = async (imageFile) => {
@@ -149,27 +151,23 @@ const PostStoreProvider = ({ children }) => {
         });
         setAddPostResult(result);
         setAddPostLoading(false);
-        setAddPostMessage({ message: "Post successfully" });
+        toast.success("Post successfully");
       } else {
         // upload field
         //delete uploaded image
         await deleteImage(uploadImageData.delete_url);
-        setAddPostMessage({ error: "Upload Post failed" });
+        setAddPostError("Upload Post failed");
         setAddPostLoading(false);
+        toast.error("Upload Post failed");
       }
     } else {
       //upload image error
-      setAddPostMessage({ error: "Upload Post failed" });
       setAddPostLoading(false);
+      toast.error("Upload Post failed");
     }
   };
 
-  const addNewPost = [
-    addPostResult,
-    addPostLoading,
-    addPostMessage,
-    AddNewPost,
-  ];
+  const addNewPost = [addPostResult, addPostLoading, addPostError, AddNewPost];
   //add new post end ^_^
 
   // Final value
