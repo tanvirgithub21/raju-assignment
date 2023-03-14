@@ -14,7 +14,7 @@ const Home = () => {
   }, []);
 
   // sort data by uploaded time
-  const sortData = allPost.result.sort(
+  const sortData = allPost?.result?.sort(
     (a, b) => new Date(b.time) - new Date(a.time)
   );
 

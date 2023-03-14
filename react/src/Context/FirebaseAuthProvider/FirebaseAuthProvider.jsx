@@ -198,6 +198,21 @@ const FirebaseAuthProvider = ({ children }) => {
     }
   };
 
+  //find user by email
+  const FindUserByEmail = async (email) => {
+    let result = false;
+    await axios
+      .get(`${process.env.REACT_APP_SERVER_URL}user/${email}`)
+      .then(({ data }) => {
+        //user find success
+        result = data;
+      })
+      .catch((err) => {
+        //user find err
+      });
+    return result;
+  };
+
   // current login user
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -254,6 +269,7 @@ const FirebaseAuthProvider = ({ children }) => {
     currentUser: [user, loading],
     getAllUsers,
     CheckAdmin,
+    FindUserByEmail,
   };
 
   return (

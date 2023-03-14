@@ -54,9 +54,7 @@ route.post("/", async (req, res) => {
             })
         }
     } catch (err) {
-        console.log(err);
         res.status(500).json({ error: "this is server side error" })
-
     }
 })
 

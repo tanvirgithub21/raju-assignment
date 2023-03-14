@@ -6,7 +6,7 @@ import { FirebaseAuth } from "../FirebaseAuthProvider/FirebaseAuthProvider";
 export const PostStore = createContext();
 const PostStoreProvider = ({ children }) => {
   // get current user info
-  const { currentUser } = useContext(FirebaseAuth);
+  const { currentUser, FindUserByEmail } = useContext(FirebaseAuth);
   const [user, loading] = currentUser;
 
   // Get all posts start
@@ -107,15 +107,19 @@ const PostStoreProvider = ({ children }) => {
   const AddNewPost = async (data) => {
     setAddPostLoading(true);
     const uploadImageData = await uploadImage(data.image);
+
     if (uploadImageData) {
+      const loginUser = await FindUserByEmail(user?.email);
+      const { name, email, username } = loginUser.result;
       //upload image successfully
       const postData = {
         title: data.title,
         imageUrl: uploadImageData.display_url,
         imageDeleteUrl: uploadImageData.delete_url,
         author: {
-          name: user?.displayName,
-          email: user?.email,
+          name,
+          email,
+          username,
         },
       };
       const result = await uploadPostDatabase(postData);
@@ -146,7 +150,6 @@ const PostStoreProvider = ({ children }) => {
 
   //show is like start
   const IsLike = (post) => {
-    console.log(post);
     if (post?.likes && post?.likes.length > 0) {
       const result = post?.likes.find((like) => like.user === user?.email);
       if (result) {

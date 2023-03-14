@@ -31,10 +31,10 @@ route.get("/", async (req, res) => {
 
 // Get a single user
 // sent data to params:- http://localhost:5000/user/id type hear...
-route.get("/:id", async (req, res) => {
-    const { id } = req.params
+route.get("/:email", async (req, res) => {
+    const { email } = req.params
     try {
-        const findUser = await User.findById(id)
+        const findUser = await User.findOne({ email: email })
         if (findUser) {
             res.status(200).json({
                 message: "Find user successfully",

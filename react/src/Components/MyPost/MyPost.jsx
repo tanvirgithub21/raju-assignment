@@ -24,7 +24,7 @@ const MyPost = () => {
   );
 
   // sort data by uploaded time
-  const sortData = myPost.sort((a, b) => new Date(b.time) - new Date(a.time));
+  const sortData = myPost?.sort((a, b) => new Date(b.time) - new Date(a.time));
 
   return (
     <div className="flex relative">

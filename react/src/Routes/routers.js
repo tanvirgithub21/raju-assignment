@@ -59,11 +59,11 @@ const routers = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <AllPostAndMyPost pageName="all-post" />,
+                element: <AllPostAndMyPost pageName="all-posts" />,
             },
             {
                 path: "my-post",
-                element: <AllPostAndMyPost pageName="my-post" />,
+                element: <AllPostAndMyPost pageName="my-posts" />,
             },
             {
                 path: "make-admin",
