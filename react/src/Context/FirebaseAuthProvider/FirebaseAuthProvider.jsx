@@ -260,8 +260,53 @@ const FirebaseAuthProvider = ({ children }) => {
     }
   };
 
-  // console.log(allUsers);
+  //make admin function start
+  const [makeAdminResult, setMakeAdminResult] = useState(Object);
+  const [makeAdminLoading, setMakeAdminLoading] = useState(false);
+  const [makeAdminError, setMakeAdminError] = useState(Object);
+  const MakeAdmin = async (id, currentStatus) => {
+    setMakeAdminLoading(true);
+    await axios
+      .put(`${process.env.REACT_APP_SERVER_URL}user/make-admin/${id}`, {
+        admin: currentStatus,
+      })
+      .then(({ data }) => {
+        if (!data?.result) {
+          setMakeAdminError({ error: data.message });
+          setMakeAdminLoading(false);
+          toast.error(data.message);
+        } else if (data?.error) {
+          setMakeAdminError({ error: data?.error });
+          setMakeAdminLoading(false);
+          toast.error("Make Admin field");
+        } else {
+          setMakeAdminResult(data.result);
+          const removedChange = allUsers.result.filter(
+            (user) => user._id !== id
+          );
+          setAllUsers({
+            ...allUsers,
+            result: [...removedChange, data.result],
+          });
+          setMakeAdminLoading(false);
+          toast.success(
+            `${
+              currentStatus
+                ? "Removed admin successfully"
+                : "Add admin successfully"
+            }`
+          );
+        }
+      });
+  };
+  const makeAdmin = [
+    makeAdminResult,
+    makeAdminLoading,
+    makeAdminError,
+    MakeAdmin,
+  ];
 
+  // All data store hear
   const firebaseStore = {
     CreateAccountEmailAndPass,
     LoginWithGmailAndPass,
@@ -270,6 +315,7 @@ const FirebaseAuthProvider = ({ children }) => {
     getAllUsers,
     CheckAdmin,
     FindUserByEmail,
+    makeAdmin,
   };
 
   return (

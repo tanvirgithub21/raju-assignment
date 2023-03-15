@@ -4,8 +4,9 @@ import { FirebaseAuth } from "../../Context/FirebaseAuthProvider/FirebaseAuthPro
 import Chart from "../../ShredComponents/Chart/Chart";
 
 const MakeAdminAndUser = ({ pageName }) => {
-  const { getAllUsers } = useContext(FirebaseAuth);
+  const { getAllUsers, makeAdmin } = useContext(FirebaseAuth);
   const [allUsers, , , GetAllUsersFN] = getAllUsers;
+  const [data, loading, error, MakeAdminFN] = makeAdmin;
 
   useEffect(() => {
     GetAllUsersFN();
@@ -69,12 +70,18 @@ const MakeAdminAndUser = ({ pageName }) => {
                     <div>
                       {user.admin ? (
                         //remove admin button
-                        <div className="font-medium text-blue-600 hover:underline text-right cursor-pointer">
+                        <div
+                          onClick={() => MakeAdminFN(user._id, user.admin)}
+                          className="font-medium text-blue-600 hover:underline text-right cursor-pointer"
+                        >
                           Remove
                         </div>
                       ) : (
                         //make admin button
-                        <div className="font-medium text-blue-600 hover:underline text-right cursor-pointer">
+                        <div
+                          onClick={() => MakeAdminFN(user._id, user.admin)}
+                          className="font-medium text-blue-600 hover:underline text-right cursor-pointer"
+                        >
                           Make Admin
                         </div>
                       )}
