@@ -1,12 +1,21 @@
 import { Avatar, Table } from "flowbite-react";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FirebaseAuth } from "../../Context/FirebaseAuthProvider/FirebaseAuthProvider";
 import Chart from "../../ShredComponents/Chart/Chart";
+import LoginRecodeModal from "./LoginRecodeModal/LoginRecodeModal";
 
 const MakeAdminAndUser = ({ pageName }) => {
   const { getAllUsers, makeAdmin } = useContext(FirebaseAuth);
   const [allUsers, , , GetAllUsersFN] = getAllUsers;
   const [, , , MakeAdminFN] = makeAdmin;
+
+  //handle login record modal
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(Object);
+  const handleModal = (data) => {
+    setModalData(data);
+    setModalOpen(!modalOpen);
+  };
 
   useEffect(() => {
     GetAllUsersFN();
@@ -20,6 +29,7 @@ const MakeAdminAndUser = ({ pageName }) => {
     pageName === "make-admin"
       ? result
       : result.filter((user) => user.admin !== true);
+  console.log(FinalResult);
 
   return (
     <div>
@@ -87,7 +97,10 @@ const MakeAdminAndUser = ({ pageName }) => {
                     </div>
                   ) : (
                     // delete user button
-                    <div className="font-medium text-blue-600 hover:underline text-right cursor-pointer">
+                    <div
+                      onClick={() => handleModal(user)}
+                      className="font-medium text-blue-600 hover:underline text-right cursor-pointer"
+                    >
                       Show
                     </div>
                   )}
@@ -97,6 +110,11 @@ const MakeAdminAndUser = ({ pageName }) => {
           })}
         </Table.Body>
       </Table>
+      <LoginRecodeModal
+        data={modalData}
+        modalOpen={modalOpen}
+        handleModal={handleModal}
+      />
     </div>
   );
 };

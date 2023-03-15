@@ -5,7 +5,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { PostStore } from "../../Context/PostStoreProvider/PostStoreProvider";
 import { toast } from "react-toastify";
-import Loading from "../Loading/Loading";
 
 const CreatePost = () => {
   const { addNewPost } = useContext(PostStore);
