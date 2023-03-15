@@ -1,10 +1,11 @@
-import { Avatar, Button, Modal, Textarea } from "flowbite-react";
+import { Avatar, Button, Modal, Spinner, Textarea } from "flowbite-react";
 import { BiImageAdd } from "react-icons/bi";
 import { MdCancel } from "react-icons/md";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { PostStore } from "../../Context/PostStoreProvider/PostStoreProvider";
 import { toast } from "react-toastify";
+import Loading from "../Loading/Loading";
 
 const CreatePost = () => {
   const { addNewPost } = useContext(PostStore);
@@ -16,6 +17,11 @@ const CreatePost = () => {
   // modal toggle handler function
   const [modalToggle, setModalToggle] = useState(false);
   const modalToggleHandle = () => setModalToggle(!modalToggle);
+
+  //submit post close modal
+  useEffect(() => {
+    setModalToggle(false);
+  }, [postResult]);
 
   const onSubmit = async (data) => {
     const postData = {
@@ -64,7 +70,7 @@ const CreatePost = () => {
           </h1>
         </Modal.Header>
         <Modal.Body className="h-auto">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="relative">
             <Textarea
               {...register("title", { required: true })}
               id="comment"
@@ -111,10 +117,20 @@ const CreatePost = () => {
               )}
             </div>
 
-            <Button type="submit" className="w-full bg-[#1A6ED8]">
-              Post
+            <Button
+              disabled={loading}
+              type="submit"
+              className="w-full bg-[#1A6ED8] flex justify-center items-center"
+            >
+              {loading ? (
+                <>
+                  <Spinner aria-label="Spinner button example" />
+                  <span className="pl-3">Loading...</span>
+                </>
+              ) : (
+                "Post"
+              )}
             </Button>
-            {loading && <p>loading</p>}
           </form>
         </Modal.Body>
       </Modal>
