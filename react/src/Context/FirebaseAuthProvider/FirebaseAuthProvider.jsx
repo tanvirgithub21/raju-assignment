@@ -45,7 +45,7 @@ const FirebaseAuthProvider = ({ children }) => {
           // post new user data in database
           createNewAccountDataPostDatabase(data);
         } else {
-          // getAuth().deleteUser(userUid)
+          // delete user work left hear ++++++++++++++++++++++++++++++++++++++++++++
           toast.error("username already exist");
         }
       })
@@ -87,7 +87,7 @@ const FirebaseAuthProvider = ({ children }) => {
         response && toast.success("Login successfully");
       })
       .catch((err) => {
-        // getAuth().deleteUser(userUid)
+        // delete user work left hear ++++++++++++++++++++++++++++++++++++++++++++
         UseSingOut();
         err && toast.error("Login field");
       });

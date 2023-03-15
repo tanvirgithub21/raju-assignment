@@ -6,7 +6,7 @@ import Chart from "../../ShredComponents/Chart/Chart";
 const MakeAdminAndUser = ({ pageName }) => {
   const { getAllUsers, makeAdmin } = useContext(FirebaseAuth);
   const [allUsers, , , GetAllUsersFN] = getAllUsers;
-  const [data, loading, error, MakeAdminFN] = makeAdmin;
+  const [, , , MakeAdminFN] = makeAdmin;
 
   useEffect(() => {
     GetAllUsersFN();
@@ -21,7 +21,6 @@ const MakeAdminAndUser = ({ pageName }) => {
       ? result
       : result.filter((user) => user.admin !== true);
 
-  console.log(FinalResult);
   return (
     <div>
       <Chart />
@@ -32,7 +31,7 @@ const MakeAdminAndUser = ({ pageName }) => {
           <Table.HeadCell>Name</Table.HeadCell>
           <Table.HeadCell>User Name</Table.HeadCell>
           <Table.HeadCell>Status</Table.HeadCell>
-          <Table.HeadCell className="text-right">Action</Table.HeadCell>
+          <Table.HeadCell className="text-right">Login Records</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {FinalResult.map((user) => {
@@ -88,8 +87,8 @@ const MakeAdminAndUser = ({ pageName }) => {
                     </div>
                   ) : (
                     // delete user button
-                    <div className="font-medium text-red-600 hover:underline text-right cursor-pointer">
-                      Delete
+                    <div className="font-medium text-blue-600 hover:underline text-right cursor-pointer">
+                      Show
                     </div>
                   )}
                 </Table.Cell>
