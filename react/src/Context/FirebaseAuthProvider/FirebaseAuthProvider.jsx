@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -34,23 +35,32 @@ const FirebaseAuthProvider = ({ children }) => {
   };
 
   // check valid username and create new account
-  const checkValidUsernameAndCreateAccount = (data, userUid = null) => {
-    // get all username
-    axios(`${process.env.REACT_APP_SERVER_URL}user/all/username`)
-      .then(async (res) => {
-        // check username valid or not
-        const validUserName = res.data.result.includes(data.username);
+  const checkValidUsernameAndCreateAccount = async (data, currentUser) => {
+    console.log(currentUser);
 
-        if (!validUserName) {
-          // post new user data in database
-          createNewAccountDataPostDatabase(data);
-        } else {
-          // delete user work left hear ++++++++++++++++++++++++++++++++++++++++++++
-          toast.error("username already exist");
-        }
+    updateProfile(currentUser, {
+      displayName: data.name,
+    })
+      .then((result) => {
+        // get all username
+        axios(`${process.env.REACT_APP_SERVER_URL}user/all/username`)
+          .then(async (res) => {
+            // check username valid or not
+            const validUserName = res.data.result.includes(data.username);
+
+            if (!validUserName) {
+              // post new user data in database
+              createNewAccountDataPostDatabase(data);
+            } else {
+              toast.error("username already exist");
+            }
+          })
+          .catch((err) => {
+            toast.error("Create account field");
+          });
       })
       .catch((err) => {
-        toast.error("Create account field");
+        UseSingOut();
       });
   };
 
@@ -60,9 +70,9 @@ const FirebaseAuthProvider = ({ children }) => {
     createUserWithEmailAndPassword(auth, email, pass)
       .then((userCredential) => {
         // Signed in
-        const userUid = userCredential.user.uid;
+        const currentUser = userCredential.user;
         // saved account information database
-        checkValidUsernameAndCreateAccount(postData, userUid);
+        checkValidUsernameAndCreateAccount(postData, currentUser);
       })
       .catch((error) => {
         const errorMessage = error.message;
