@@ -29,11 +29,11 @@ const MyPost = () => {
   return (
     <div className="flex relative">
       {/* main app left sidebar */}
-      <div className=" min-h-screen p-3 sticky top-[73px]">
+      <div className=" min-h-screen p-3 hidden md:block md:sticky top-[73px]">
         <Sidebar />
       </div>
       {/* Home component  */}
-      <div className="w-full max-w-[40rem]">
+      <div className="w-full max-w-[40rem] mx-auto px-1">
         <CreatePost />
         {loading && <p>Loading ...</p>}
         {sortData &&
@@ -46,7 +46,7 @@ const MyPost = () => {
       </div>
 
       {/* main app right sidebar */}
-      <div className=" min-h-screen p-3 sticky top-[73px]">
+      <div className=" min-h-screen p-3 hidden md:block md:sticky  top-[73px]">
         <AllUser />
       </div>
     </div>

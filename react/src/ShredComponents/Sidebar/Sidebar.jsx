@@ -10,12 +10,12 @@ const Sidebar = () => {
   const adminStatus = CheckAdmin();
   // nav style css variable
   const deActive =
-    "text-lg text-gray-dark font-semibold mb-3 p-2 hover:bg-gray-100 w-full rounded-xl flex items-center cursor-pointer";
+    "md:text-base edit-- text-gray-dark font-semibold mb-3 p-2 hover:bg-gray-100 w-full rounded-xl flex items-center cursor-pointer";
   const active =
-    "text-lg text-[#1C64F2] font-semibold mb-3 p-2 hover:bg-gray-100 w-full rounded-xl flex items-center cursor-pointer";
+    "md:text-base edit-- text-gray-100 hover:text-gray-100 font-semibold mb-3 p-2  bg-[#2165eed1] hover:bg-[#2165eed1] w-full rounded-xl flex items-center cursor-pointer";
 
   return (
-    <div className="w-[22rem] min-h-[calc(100vh-95px)] p-3 sticky top-[85px]  border-r-2 border-gray-100">
+    <div className="md:w-[11rem] edit-- lg:w-[22rem] min-h-[calc(100vh-95px)] p-3 hidden md:block md:sticky  top-[85px]  border-r-2 border-gray-100">
       <ul>
         <li>
           <NavLink
@@ -23,7 +23,7 @@ const Sidebar = () => {
             className={({ isActive }) => (isActive ? active : deActive)}
           >
             <span className="mr-2">
-              <HiHome size="1.8rem" />
+              <HiHome size="1.5rem" />
             </span>
             Home
           </NavLink>
@@ -34,7 +34,7 @@ const Sidebar = () => {
             className={({ isActive }) => (isActive ? active : deActive)}
           >
             <span className="mr-2">
-              <BsSearch size="1.8rem" />
+              <BsSearch size="1.5rem" />
             </span>
             Search
           </NavLink>
@@ -45,7 +45,7 @@ const Sidebar = () => {
             className={({ isActive }) => (isActive ? active : deActive)}
           >
             <span className="mr-2">
-              <BsPostcardHeart size="1.8rem" />
+              <BsPostcardHeart size="1.5rem" />
             </span>
             My Post
           </NavLink>
@@ -57,7 +57,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? active : deActive)}
             >
               <span className="mr-2">
-                <MdSpaceDashboard size="1.8rem" />
+                <MdSpaceDashboard size="1.5rem" />
               </span>
               Dashboard
             </NavLink>

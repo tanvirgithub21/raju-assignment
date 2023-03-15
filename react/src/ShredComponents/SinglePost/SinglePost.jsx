@@ -8,7 +8,7 @@ import { PostStore } from "../../Context/PostStoreProvider/PostStoreProvider";
 
 const SinglePost = ({ post }) => {
   const { deletePost, IsLike, LikePost } = useContext(PostStore);
-  const [result, loading, error, deletePostFN] = deletePost;
+  const [, , , deletePostFN] = deletePost;
 
   const { _id, title, imageUrl, time, author, likes } = post;
   const { pathname } = useLocation();
