@@ -6,6 +6,14 @@ const loginRecordSchema = require("../schemas/loginRecordSchema")
 const User = new mongoose.model("user", loginRecordSchema)
 
 
+
+const data = {
+    admin: false, email: "tanvir.bd.global123@gmail.com", loginRecords: [], name: "Md. Tanvir Ahmed",
+    time: "2023-03-14T21:15:08.260Z",
+    username: "tom2@gfdmail.com", _id: "640d4609dcb5aee01b37f43b"
+}
+
+
 // user router
 // Get all users
 // sent data to params:- http://localhost:5000/users
@@ -128,6 +136,26 @@ route.put("/login", (req, res) => {
     }
 
 })
+
+
+//update the "admin" property of a user by their ID
+// sent data to body:-{admin: "value"} params pass user ID http://localhost:5000/user/make-admin/ID
+route.put("/make-admin/:id", (req, res) => {
+    User.findByIdAndUpdate(req.params.id, { admin: !req.body.admin }, { new: true })
+        .then(user => {
+            if (!user) {
+                res.status(404).json({ message: "User not found" });
+            } else {
+                res.status(200).json({
+                    message: "Make admin successfully",
+                    result: user
+                });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error: "this is server side error" })
+        });
+});
 
 // delete a single user
 // sent data to params:- http://localhost:5000/user/delete/id type hear...
