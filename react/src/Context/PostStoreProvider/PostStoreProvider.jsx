@@ -151,7 +151,7 @@ const PostStoreProvider = ({ children }) => {
   //show is like start
   const IsLike = (post) => {
     if (post?.likes && post?.likes.length > 0) {
-      const result = post?.likes.find((like) => like.user === user?.email);
+      const result = post?.likes?.find((like) => like?.user === user?.email);
       if (result) {
         return true;
       } else {

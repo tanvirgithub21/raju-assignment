@@ -133,7 +133,7 @@ const FirebaseAuthProvider = ({ children }) => {
       .then((res) => {
         const users = res.data.result;
         if (users.length > 0) {
-          const exitUser = users.find((user) => user.email === findUser);
+          const exitUser = users?.find((user) => user?.email === findUser);
           exitOrNot = exitUser;
         } else {
           exitOrNot = false;
@@ -262,7 +262,7 @@ const FirebaseAuthProvider = ({ children }) => {
 
   //check login user admin status
   const CheckAdmin = () => {
-    const loginUser = allUsers.result.find(
+    const loginUser = allUsers?.result?.find(
       (databaseUser) => databaseUser.email === user.email
     );
     if (loginUser) {

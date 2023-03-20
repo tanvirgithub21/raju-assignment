@@ -17,7 +17,7 @@ const AdminDashboard = () => {
 
   //find login user
   const loginUserEmail = UseLoginUserEmail();
-  const loginUserInfo = allUsers.result.find(
+  const loginUserInfo = allUsers?.result?.find(
     (user) => user.email === loginUserEmail
   );
 
