@@ -21,9 +21,10 @@ const Home = () => {
   return (
     <div className="flex relative">
       {/* main app left sidebar */}
-      <div className=" h-full p-3 hidden md:block md:sticky  top-[73px]">
+      <div className=" border-r sticky top-[60px] border-gray-300 ">
         <Sidebar />
       </div>
+
       {/* Home component  */}
       <div className="w-full max-w-[40rem] mx-auto px-1">
         <CreatePost />
@@ -35,7 +36,7 @@ const Home = () => {
       </div>
 
       {/* main app right sidebar */}
-      <div className=" min-h-screen p-3 hidden md:block md:sticky  top-[73px]">
+      <div className=" border-l sticky top-[75px] border-gray-300">
         <AllUser />
       </div>
     </div>

@@ -15,7 +15,7 @@ const Sidebar = () => {
     "md:text-base edit-- text-gray-100 hover:text-gray-100 font-semibold mb-3 p-2  bg-[#2165eed1] hover:bg-[#2165eed1] w-full rounded-xl flex items-center cursor-pointer";
 
   return (
-    <div className="md:w-[11rem] edit-- lg:w-[22rem] min-h-[calc(100vh-95px)] p-3 hidden md:block md:sticky  top-[85px]  border-r-2 border-gray-100">
+    <div className="md:w-[11rem] lg:w-[22rem] min-h-[calc(100vh-95px)] p-3 sticky top-[75px]">
       <ul>
         <li>
           <NavLink
