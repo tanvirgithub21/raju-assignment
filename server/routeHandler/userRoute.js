@@ -41,6 +41,7 @@ route.get("/", async (req, res) => {
 // sent data to params:- http://localhost:5000/user/id type hear...
 route.get("/:email", async (req, res) => {
     const { email } = req.params
+    // const { email } = req.params
     try {
         const findUser = await User.findOne({ email: email })
         if (findUser) {
